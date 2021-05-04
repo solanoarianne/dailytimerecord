@@ -1,0 +1,70 @@
+<!--LOGIN CARD-->
+<div style="padding: 15% 15%;">
+    <div class="card mb-3" style="max-width: 800px; margin: auto;">
+        <div class="row g-0">
+        <div class="col-md-4">
+            <div class="lPanel">
+                <h1 style="justify-content: center; text-align: center;">COCOLIME</h1>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body" style="border-left: 5px solid black;">
+            <h5 class="card-title">LOGIN</h5>
+            <form>
+                <div class="mb-3">
+                  <label for="uname" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="uname" name="uname" [(ngModel)] = "logUname">
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="pword" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="pword" name="uname" [(ngModel)] = "logPword">
+                </div>
+                <button type="button" class="btn btn-outline-info" style="margin: 3% 3% 3% 0%;" (click)="regModal(contentRegister);">Register</button>
+                <button type="submit" class="btn btn-primary float-end" (click)="loginUser()">Login</button>      
+              </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--REGISTER MODAL-->
+
+<ng-template #contentRegister let-modal>
+    <form (ngSubmit)="registerUser()">
+    <div class="modal-header">
+      <h4 class="modal-title">Add Product</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="uname">Username</label>
+            <input name="uname" type="email" class="form-control" id="uname" [(ngModel)]="inputVal" placeholder="Username" required>
+          </div>
+          <div class="form-group">
+            <label for="pword">Password</label>
+            <input name="pword" type="text" class="form-control" id="pword"  [(ngModel)]="inputVal2" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <label for="fname">Full Name</label>
+            <input name="fname" type="text" class="form-control" id="name"  [(ngModel)]="inputVal3" placeholder="Full Name" required>
+          </div>
+        </div>
+
+        
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      <button type="submit" class="btn btn-primary" >Confirm</button>
+    </div>
+    </form>
+  </ng-template>

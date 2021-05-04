@@ -1,0 +1,187 @@
+<!--PRODUCTS TABLE-->
+<div class="container-fluid">
+  <button type="button" class="btnpad btn btn-danger" (click)="logoutFunction();">LOGOUT</button>
+<h1>HELLO <span id="name"></span></h1>
+
+
+
+
+
+<br>
+
+
+    <button type="button" class="btnpad roundbtn btn btn-primary" (click)="addModal(contentAdd)"><fa-icon [icon]="faPlus"></fa-icon></button>
+
+
+
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+
+        <thead class="thead-dark">
+            <tr class="text-primary">
+            <th scope="col">No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Date Acquired</th>
+            <th scope="col">Date Expiry</th>
+            <th scope="col">Price</th>
+            <th scope="col">Minimum</th>
+            <th scope="col">Remarks</th>
+            <th scope="col">Date Modified</th>
+            <th scope="col">Modified By</th>
+            <th scope="col">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let products of products">
+
+            <th class=" align-middle" scope="row">{{ products?.item_id}}</th>
+            <td class=" align-middle">{{ products?.item_name }}</td>
+            <td class=" align-middle">{{ products?.item_desc }}</td>
+            <td class=" align-middle">{{ products?.item_quant }}</td>
+            <td class=" align-middle">{{ products?.date_acquired }}</td>
+            <td class=" align-middle">{{ products?.date_expiry }}</td>
+            <td class=" align-middle">{{ products?.item_price }}</td>
+            <td class=" align-middle">{{ products?.item_minimum }}</td>
+            <td class=" align-middle">{{ products?.remarks }}</td>
+            <td class=" align-middle">{{ products?.dateModified }}</td>
+            <td class=" align-middle">{{ products?.modifiedBy }}</td>
+
+            <td class=" align-middle">
+                <button type="button" class="btnpad btn btn-warning" (click)="editForm(products); editModal(contentEdit);">
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+
+                <button type="button" class="btnpad btn btn-danger" (click)="delProduct(products.item_id);">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+            </td>
+
+            </tr>
+        </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!--MODALS-->
+
+<!--ADD MODAL-->
+<ng-template #contentAdd let-modal class=" modalFade" >
+    <div class="modal-header">
+      <h4 class="modal-title">Add Product</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group" hidden >
+          <label for="item_id">ID</label>
+          <input type="text" class="form-control" id="item_id" hidden>
+          <input type="text" class="form-control" value="{{username}}" id="modifiedBy" name="modifiedBy" [(ngModel)] = "modifiedBy" hidden>
+        </div> 
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="item_name">Product Name</label>
+            <input name="item_name" type="email" class="form-control" id="item_name" placeholder="Name" [(ngModel)]="item_name">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="item_quant">Quantity</label>
+            <input name="item_quant" type="number" class="form-control" id="item_quant" placeholder="Quantity" [(ngModel)]="item_quant">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="item_desc">Description</label>
+          <input name="item_desc" type="text" class="form-control" id="item_desc" placeholder="Description" [(ngModel)]="item_desc">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="date_expiry">Date Expiry</label>
+            <input name="date_expiry" type="date" class="form-control" id="date_expiry" [(ngModel)]="date_expiry">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Price</label>
+            <input name="item_price" type="number" class="form-control" id="item_price" placeholder="price" [(ngModel)]="item_price">
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputZip">Min.</label>
+            <input name="item_minimum" type="number" class="form-control" id="item_minimum" [(ngModel)]="item_minimum">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Remarks</label>
+          <input name="remarks" type="text" class="form-control" id="remarks" placeholder="Remarks" [(ngModel)]="remarks">
+        </div>
+        
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      <button type="submit" class="btn btn-primary" (click)="addProduct()">Confirm</button>
+    </div>
+  </ng-template>
+
+  <!--EDIT MODAL-->
+
+<ng-template #contentEdit let-modal class="modalFade" >
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Product</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group" hidden >
+        <label for="item_id">ID</label>
+        <input name="item_id" type="text" class="form-control" id="item_id" [(ngModel)]="prodInfo.item_id1" hidden>
+        <input type="text" class="form-control" value="{{username1}}" id="modifiedBy1" name="modifiedBy1" [(ngModel)] = "modifiedBy1" disabled>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="item_name">Product Name</label>
+          <input name="item_name1" type="email" class="form-control" id="item_name1" placeholder="Name" [(ngModel)]="prodInfo.item_name1">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="item_quant">Quantity</label>
+          <input name="item_quant1" type="number" class="form-control" id="item_quant1" placeholder="Quantity" [(ngModel)]="prodInfo.item_quant1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="item_desc">Description</label>
+        <input name="item_desc1" type="text" class="form-control" id="item_desc1" placeholder="Description" [(ngModel)]="prodInfo.item_desc1">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="date_expiry">Date Expiry</label>
+          <input name="date_expiry1" type="date" class="form-control" id="date_expiry1" [(ngModel)]="prodInfo.date_expiry1">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">Price</label>
+          <input name="item_price1" type="number" class="form-control" id="item_price1" placeholder="price" [(ngModel)]="prodInfo.item_price1">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Min.</label>
+          <input name="item_minimum1" type="number" class="form-control" id="item_minimum1" [(ngModel)]="prodInfo.item_minimum1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Remarks</label>
+        <input name="remarks1" type="text" class="form-control" id="remarks1" placeholder="Remarks" [(ngModel)]="prodInfo.remarks1">
+      </div>
+      
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button type="submit" class="btn btn-success" (click)="editProduct($event);">Confirm</button>
+  </div>
+</ng-template>
