@@ -118,7 +118,7 @@ export class MainComponent implements OnInit {
     
     await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
       this.pullProducts();
-    })
+    });
 
   }
 
