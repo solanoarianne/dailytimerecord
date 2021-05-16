@@ -4,7 +4,7 @@
         private $host = 'localhost';
         private $username = 'root';
         private $password = '';
-        private $dbname = 'payrollDB';
+        private $dbname = 'cocolime';
         private $conn;
 
         function connect() {
