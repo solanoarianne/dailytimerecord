@@ -8,8 +8,8 @@ export class DataService {
   
   constructor(private http: HttpClient) {}
 
-  // apiURL = "http://localhost/cocolime/inventorySys/restAPI/";
-  apiURL = "http://localhost/inventorySys/restAPI/";
+  apiURL = "http://localhost/cocolime/inventorySys/restAPI/";
+  // apiURL = "http://localhost/inventorySys/restAPI/";
   sendApiRequest(method, data) {
     return <any>(
       this.http.post(this.apiURL + method, btoa(JSON.stringify(data)))

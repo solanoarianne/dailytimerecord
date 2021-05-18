@@ -1,32 +1,34 @@
 <!--LOGIN CARD-->
-<div style="padding: 15% 15%;">
-    <div class="card mb-3" style="max-width: 800px; margin: auto;">
-        <div class="row g-0">
-        <div class="col-md-4">
-            <div class="lPanel">
-                <h1 style="justify-content: center; text-align: center;">COCOLIME</h1>
-            </div>
+<div style="padding: 9% 15%;">
+    <div class="card mb-3" style="max-width: 800px; margin: auto; align-items: center; border: none;">
+        
+        <div class="col-md-6">
+                <img style="height: 150px; width: 400px;" src="assets/logo.png">
+               <div class="container">
+                <h3 class="header-txt" style=" color: #858585;">Inventory</h3>
+                <button type="button" class="regbtn" (click)="regModal(contentRegister);">Register</button>
+              </div>
         </div>
-        <div class="col-md-8">
-            <div class="card-body" style="border-left: 5px solid black;">
-            <h5 class="card-title">LOGIN</h5>
+        <div class="col-md-6">
+            <div class="card-body">
+            <h5 class="card-title" style="color: #858585;">LOGIN</h5>
             <form>
                 <div class="mb-3">
-                  <label for="uname" class="form-label">Username</label>
+                  <label for="uname" style=" color: #858585;" class="form-label">Username</label>
                   <input type="text" class="form-control" id="uname" name="uname" [(ngModel)] = "logUname">
                   
                 </div>
                 <div class="mb-3">
-                  <label for="pword" class="form-label">Password</label>
+                  <label for="pword" style=" color: #858585;" class="form-label">Password</label>
                   <input type="password" class="form-control" id="pword" name="uname" [(ngModel)] = "logPword">
                 </div>
-                <button type="button" class="btn btn-outline-info" style="margin: 3% 3% 3% 0%;" (click)="regModal(contentRegister);">Register</button>
-                <button type="submit" class="btn btn-primary float-end" (click)="loginUser()">Login</button>      
+                <button type="submit" class="btn btn-primary float-end" style="background-color: #357555; border-radius: 250px; width: 330px;" (click)="loginUser()">Login</button>      
               </form>
             </div>
+            
+
         </div>
         </div>
-    </div>
 </div>
 
 
@@ -36,7 +38,7 @@
 <ng-template #contentRegister let-modal>
     <form (ngSubmit)="registerUser()">
     <div class="modal-header">
-      <h4 class="modal-title">Add Product</h4>
+      <h4 class="modal-title">Register</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
