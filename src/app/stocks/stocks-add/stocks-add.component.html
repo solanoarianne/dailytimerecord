@@ -1,0 +1,70 @@
+<mat-list role="list">
+
+    <div>
+        <h2>ADD STOCKS</h2>
+        <button mat-icon-button class="close-button" aria-label="Example icon-button with heart icon">
+        <mat-icon>close</mat-icon>
+    </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item class="first-row" role="listitem">
+
+        <mat-form-field class="product-name" appearance="outline">
+            <mat-label>Product Name</mat-label>
+            <input matInput placeholder="Product Name">
+        </mat-form-field>
+
+        <mat-form-field class="quantity" appearance="outline">
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" placeholder="Quantity">
+        </mat-form-field>
+
+    </mat-list-item>
+
+    <mat-list-item class="second-row" role="listitem">
+
+        <mat-form-field class="description" appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="Description">
+        </mat-form-field>
+
+    </mat-list-item>
+
+    <mat-list-item class="third-row" role="listitem">
+
+        <mat-form-field class="date-expiry" appearance="outline">
+            <mat-label>Date Expiry</mat-label>
+            <input matInput placeholder="Date Expiry" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="price" appearance="outline">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" class="example-right-align">
+            <span matPrefix>₱&nbsp;</span>
+            <span matSuffix>.00</span>
+        </mat-form-field>
+
+        <mat-form-field class="minimum" appearance="outline">
+            <mat-label>Minimum</mat-label>
+            <input matInput type="number" placeholder="Minimum">
+        </mat-form-field>
+
+    </mat-list-item>
+
+    <mat-list-item class="fourth-row" role="listitem">
+
+        <mat-form-field class="remarks" appearance="outline">
+            <mat-label>Remarks</mat-label>
+            <input matInput placeholder="Remarks">
+        </mat-form-field>
+
+    </mat-list-item>
+
+
+    <button class="add-button" mat-flat-button color="warn">Add</button>
+
+</mat-list>

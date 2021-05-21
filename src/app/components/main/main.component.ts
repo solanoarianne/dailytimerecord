@@ -159,7 +159,7 @@ export class MainComponent implements OnInit {
   
 logoutFunction(){
   localStorage.clear();
-  this.router.navigate(['']);
+  this.router.navigate(['login']);
 }
 
   
