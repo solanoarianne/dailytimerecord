@@ -25,7 +25,7 @@
 			switch ($req[0]) {
 
 				case 'inventory':
-					echo json_encode($post->generalQuery("SELECT * FROM inventory_tb"));
+					echo json_encode($post->generalQuery("SELECT * FROM inventory_tb WHERE is_Archive = 0"));
 					
 				break;
 
@@ -42,6 +42,16 @@
                 case 'delProduct':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
                     echo json_encode($post->delProduct($d));
+				break;
+
+				case 'arcProduct':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($post->arcProduct($d));
+				break;
+
+				case 'recProduct':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($post->recProduct($d));
 				break;
 
 				case 'registerUser':

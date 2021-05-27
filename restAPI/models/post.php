@@ -77,7 +77,8 @@
             $payload = $dt;
 
             $this->sql = "DELETE FROM inventory_tb WHERE item_id = '$dt->item_id'"; 
-            
+            // $this->sql = "UPDATE inventory_tb SET is_Archive = 1 WHERE item_id =$dt->item_id";
+
             $this->conn->query($this->sql);
 
             $this->data = $payload;
@@ -89,6 +90,44 @@
                 'timestamp'=>date('D M j, Y h:i:s e')
             );
         }
+
+		//ARCHIVE A PRODUCT FUNCTION
+		function arcProduct($dt) {
+            $payload = $dt;
+
+            $this->sql = "UPDATE inventory_tb SET is_Archive = 1 WHERE item_id =$dt->item_id";
+
+            $this->conn->query($this->sql);
+
+            $this->data = $payload;
+
+            return array(
+                'status'=>$this->status,
+                'payload'=>$this->data,
+                'prepared_by'=>'Inventory Admin',
+                'timestamp'=>date('D M j, Y h:i:s e')
+            );
+        }
+
+		//RECOVER A PRODUCT FUNCTION
+		function recProduct($dt) {
+            $payload = $dt;
+
+            $this->sql = "UPDATE inventory_tb SET is_Archive = 0 WHERE item_id =$dt->item_id";
+
+            $this->conn->query($this->sql);
+
+            $this->data = $payload;
+
+            return array(
+                'status'=>$this->status,
+                'payload'=>$this->data,
+                'prepared_by'=>'Inventory Admin',
+                'timestamp'=>date('D M j, Y h:i:s e')
+            );
+        }
+
+	
 
 		//UPDATE A PRODUCT
 
@@ -102,10 +141,8 @@
         }
 
 
-
-
 		function select($table, $filter_data) {
-			$this->sql = "SELECT * FROM $table";
+			$this->sql = "SELECT * FROM $table WHERE is_Archive = 0";
 
 			if($filter_data!=null){
 				$this->sql.=" WHERE item_id='$filter_data'";
@@ -144,6 +181,18 @@
 			$sql = "DELETE FROM inventory_tb WHERE item_id=$dt->item_id";
 			$this->conn->query($sql);
 			return $this->select('inventory_tb', null);
+		}
+
+		function archive_record($dt){
+			$sql = "UPDATE inventory_tb SET is_Archive = 1 WHERE item_id =$dt->item_id";
+			$this->conn->query($sql);
+			return $this->select('inventory_tb', null);
+			}
+
+		function recover_record($dt){
+			$sql = "UPDATE inventory_tb SET is_Archive = 0 WHERE item_id =$dt->item_id";
+			$this->conn->query($sql);
+			return $this->select('inventory_tb', null); 
 		}
 	} // end of Post() Class
 ?>

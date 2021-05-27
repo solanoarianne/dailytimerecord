@@ -100,7 +100,20 @@ export class MainComponent implements OnInit {
       this.pullProducts();
     });
   }
-
+//ARCHIVE
+  async arcProduct(e) {
+    this.prodInfo.item_id = e;
+    await this.ds.sendApiRequest("arcProduct", this.prodInfo).subscribe(res => {
+      this.pullProducts();
+  });
+}
+//RECOVER
+async recProduct(e) {
+  this.prodInfo.item_id = e;
+  await this.ds.sendApiRequest("recProduct", this.prodInfo).subscribe(res => {
+    this.pullProducts();
+});
+}
   //CREATE
   async addProduct(){
 
