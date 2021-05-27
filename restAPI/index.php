@@ -29,6 +29,11 @@
 					
 				break;
 
+				case 'inventory_Archive':
+					echo json_encode($post->generalQuery("SELECT * FROM inventory_tb WHERE is_Archive = 1"));
+					
+				break;
+
 				case 'addProduct':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
 					echo json_encode($post->addProduct($d));

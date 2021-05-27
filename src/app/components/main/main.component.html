@@ -53,6 +53,8 @@
 
     <button type="button" class="btnpad roundbtn btn btn-primary" (click)="addModal(contentAdd)"><fa-icon [icon]="faPlus"></fa-icon></button>
 
+    <button type="button" style="float: right;" class="btnpad roundbtn btn btn-primary" (click)="addModal(contentArchive)">  <fa-icon [icon]="faTrash"></fa-icon></button>
+
 
 
     <div class="table-responsive">
@@ -227,3 +229,66 @@
 </ng-template>
 
 <!-- ARCHIVE MODAL -->
+
+<ng-template #contentArchive let-modal class="modalFade">
+  
+    <div class="modal-header">
+        <h4 class="modal-title">Archive Product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive">
+
+        <table class="table table-striped">
+
+            <thead class="thead-dark">
+                <tr class="text-primary">
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Date Acquired</th>
+                    <th scope="col">Date Expiry</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Minimum</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col">Date Modified</th>
+                    <th scope="col">Modified By</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let products of products">
+
+                    <th class=" align-middle" scope="row">{{ products?.item_id}}</th>
+                    <td class=" align-middle">{{ products?.item_name }}</td>
+                    <td class=" align-middle">{{ products?.item_desc }}</td>
+                    <td class=" align-middle">{{ products?.item_quant }}</td>
+                    <td class=" align-middle">{{ products?.date_acquired }}</td>
+                    <td class=" align-middle">{{ products?.date_expiry }}</td>
+                    <td class=" align-middle">{{ products?.item_price }}</td>
+                    <td class=" align-middle">{{ products?.item_minimum }}</td>
+                    <td class=" align-middle">{{ products?.remarks }}</td>
+                    <td class=" align-middle">{{ products?.dateModified }}</td>
+                    <td class=" align-middle">{{ products?.modifiedBy }}</td>
+
+                    <td class=" align-middle">
+                <button type="button" class="btnpad btn btn-danger" (click)="arcProduct(products.item_id);">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+                    </td>
+
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

@@ -84,13 +84,19 @@ export class MainComponent implements OnInit {
     this.getName1();
 
   }
-
+//WHERE is_Archive = 0
   pullProducts() {
     this.ds.sendApiRequest("inventory", null).subscribe(data => {
       this.products = data.data;
     })
-    
   }
+//WHERE is_Archive = 1
+pullArchive() {
+  this.ds.sendApiRequest("inventory_Archive", null).subscribe(data => {
+    this.products = data.data;
+  })
+}
+
 //CRUD FUNCTIONS
 
   //DELETE
@@ -111,7 +117,7 @@ export class MainComponent implements OnInit {
 async recProduct(e) {
   this.prodInfo.item_id = e;
   await this.ds.sendApiRequest("recProduct", this.prodInfo).subscribe(res => {
-    this.pullProducts();
+    this.pullArchive();
 });
 }
   //CREATE
@@ -150,16 +156,22 @@ async recProduct(e) {
     this.prodInfo.item_price1 = products.item_price;
     this.prodInfo.item_minimum1 = products.item_minimum;
     this.prodInfo.remarks1 = products.remarks;
-
-    
-
-      
-    
   }
 
-  //EDIT FUNCTION
+  //get the value of row is_Archive
+  // recoverProduct = (products) => {
 
- 
+  //   this.prodInfo.item_id1    = products.item_id;
+  //   this.prodInfo.item_name1 = products.item_name;
+  //   this.prodInfo.item_desc1 = products.item_desc;
+  //   this.prodInfo.item_quant1 = products.item_quant;
+  //   this.prodInfo.date_expiry1 = products.date_expiry;
+  //   this.prodInfo.item_price1 = products.item_price;
+  //   this.prodInfo.item_minimum1 = products.item_minimum;
+  //   this.prodInfo.remarks1 = products.remarks;
+  // }
+
+  //EDIT FUNCTION
   async editProduct(e){
     e.preventDefault();
     this.prodInfo.modifiedBy1 = this.modifiedBy1
@@ -173,8 +185,5 @@ async recProduct(e) {
 logoutFunction(){
   localStorage.clear();
   this.router.navigate(['login']);
-}
-
-  
-
+  }
 }
