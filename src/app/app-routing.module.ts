@@ -31,6 +31,7 @@ const routes: Routes = [
     path: 'supply', 
     component: SupplyComponent,
   },
+  { path: '',   redirectTo: '/login', pathMatch: 'full' }
 
 ];
 

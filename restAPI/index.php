@@ -25,7 +25,7 @@
 			switch ($req[0]) {
 
 				case 'inventory':
-					echo json_encode($post->generalQuery("SELECT * FROM inventory_tb WHERE is_Archive = 0"));
+					echo json_encode($post->select("inventory_tb", "0"));
 					
 				break;
 
@@ -81,10 +81,11 @@
 		case 'GET':
 			switch ($req[0]) {
 
-				// case 'inventory':
-				// 	echo json_encode($post->generalQuery("SELECT * FROM inventory_tb"));
+				
+				case 'inventory':
+					echo json_encode($post->generalQuery("SELECT * FROM inventory_tb"));
 					
-				// break;
+				break;
 
 				// case 'addProduct':
 				// 	$d = json_decode(base64_decode(file_get_contents("php://input")));

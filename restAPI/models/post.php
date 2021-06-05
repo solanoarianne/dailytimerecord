@@ -18,37 +18,38 @@
 		}
 
 
-        function generalQuery($query){
+        // Don't use this piece of shit inubos oras ko neto HAHAHAHAHAHHAH
+        // function generalQuery($query){
 
-            $this->result = $this->conn->query($query);
-            $rowCount = $this->result->num_rows;
-            if ($this->result->num_rows>0) {
-                while($res = $this->result->fetch_assoc()){
-                    array_push($this->data,$res);
-                }
-                return $this->info = array(
-                        'status'=>array(
-                        'remarks'=>true,
-                        'message'=>'Data retrieval successful.'
-                    ),
-                    'data' =>$this->data,
-                    'payload'=>$this->data,
-                    'dataCount'=>$rowCount,
-                    'timestamp'=>date('D M j, Y h:i:s e'),
-                    'prepared_by'=>'Inventory Admin'
-                );
+        //     $this->result = $this->conn->query($query);
+        //     $rowCount = $this->result->num_rows;
+        //     if ($this->result->num_rows>0) {
+        //         while($res = $this->result->fetch_assoc()){
+        //             array_push($this->data,$res);
+        //         }
+        //         return $this->info = array(
+        //                 'status'=>array(
+        //                 'remarks'=>true,
+        //                 'message'=>'Data retrieval successful.'
+        //             ),
+        //             'data' =>$this->data,
+        //             'payload'=>$this->data,
+        //             'dataCount'=>$rowCount,
+        //             'timestamp'=>date('D M j, Y h:i:s e'),
+        //             'prepared_by'=>'Inventory Admin'
+        //         );
     
-            } else {
-                return $this->info = array('status'=>array(
-                    'remarks'=>false,
-                    'payload'=>$this->data,
-                    'dataCount'=>$rowCount,
-                    'message'=>'Data retrieval failed.'),
-                    'timestamp'=>date('D M j, Y h:i:s e'),
-                    'prepared_by'=>'Inventory Admin' );
-            }
+        //     } else {
+        //         return $this->info = array('status'=>array(
+        //             'remarks'=>false,
+        //             'payload'=>$this->data,
+        //             'dataCount'=>$rowCount,
+        //             'message'=>'Data retrieval failed.'),
+        //             'timestamp'=>date('D M j, Y h:i:s e'),
+        //             'prepared_by'=>'Inventory Admin' );
+        //     }
 
-        }
+        // }
 
 		//ADD PRODUCT FUNCTION
 		function addProduct($dt) {
@@ -141,13 +142,12 @@
         }
 
 
+
+        // Eto na yung bagong pang pull ng hindi naka archive na items
 		function select($table, $filter_data) {
 			$this->sql = "SELECT * FROM $table WHERE is_Archive = 0";
 
-			if($filter_data!=null){
-				$this->sql.=" WHERE item_id='$filter_data'";
-			}
-
+			
 			if($result = $this->conn->query($this->sql)){
 				if($result->num_rows>0){
 					while($res = $result->fetch_assoc()){
