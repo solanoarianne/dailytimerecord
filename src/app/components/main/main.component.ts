@@ -121,19 +121,17 @@ async recProduct(e) {
 });
 }
   //CREATE
-  async addProduct(){
+async addProduct(){
+  this.prodInfo.item_name = this.item_name;
+  this.prodInfo.item_desc = this.item_desc;
+  this.prodInfo.item_quant = this.item_quant;
+  this.prodInfo.date_expiry = this.date_expiry;
+  this.prodInfo.item_price = this.item_price;
+  this.prodInfo.item_minimum = this.item_minimum;
+  this.prodInfo.remarks = this.remarks;
+  this.prodInfo.modifiedBy = this.modifiedBy;
 
-
-    this.prodInfo.item_name = this.item_name;
-    this.prodInfo.item_desc = this.item_desc;
-    this.prodInfo.item_quant = this.item_quant;
-    this.prodInfo.date_expiry = this.date_expiry;
-    this.prodInfo.item_price = this.item_price;
-    this.prodInfo.item_minimum = this.item_minimum;
-    this.prodInfo.remarks = this.remarks;
-    this.prodInfo.modifiedBy = this.modifiedBy;
-
-    console.log(this.prodInfo.modifiedBy);
+  console.log(this.prodInfo.modifiedBy);
     
     await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
       this.pullProducts();

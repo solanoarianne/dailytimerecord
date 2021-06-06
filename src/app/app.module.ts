@@ -62,6 +62,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { StocksComponent } from './stocks/stocks.component';
 import { SupplyComponent } from './supply/supply.component';
 import { StocksAddComponent } from './stocks/stocks-add/stocks-add.component';
+import { ArchiveComponent } from './archive/archive.component';
 // HTTP
 
 @NgModule({
@@ -72,7 +73,8 @@ import { StocksAddComponent } from './stocks/stocks-add/stocks-add.component';
     OrdersComponent,
     StocksComponent,
     SupplyComponent,
-    StocksAddComponent
+    StocksAddComponent,
+    ArchiveComponent
   ],
   imports: [
     BrowserModule,

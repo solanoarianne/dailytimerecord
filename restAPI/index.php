@@ -30,7 +30,7 @@
 				break;
 
 				case 'inventory_Archive':
-					echo json_encode($post->generalQuery("SELECT * FROM inventory_tb WHERE is_Archive = 1"));
+					echo json_encode($post->selectArchive("inventory_tb", "1"));
 					
 				break;
 
@@ -39,6 +39,7 @@
 					echo json_encode($post->addProduct($d));
 				break;
 
+		
 				case 'editProduct':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
 					echo json_encode($post->editProduct($d));

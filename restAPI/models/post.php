@@ -69,8 +69,8 @@
                 'timestamp'=>date('D M j, Y h:i:s e')
             );
         }
-
-
+	
+	
 
 		//DELETE A PRODUCT FUNCTION
 
@@ -164,6 +164,29 @@
 				'timestamp'=>date('D M j, Y G:i:s T')
 			);
 		}
+
+        //Eto yung pang view ng mga naka archive sa archive table
+        function selectArchive($table, $filter_data) {
+			$this->sql = "SELECT * FROM $table WHERE is_Archive = 1";
+
+			
+			if($result = $this->conn->query($this->sql)){
+				if($result->num_rows>0){
+					while($res = $result->fetch_assoc()){
+						array_push($this->data, $res);
+					}
+					$this->status = $this->success_stat;
+					http_response_code(200);
+				}
+			}
+			return array(
+				'status'=>$this->status,
+				'payload'=>$this->data,
+				'prepared_by'=>'Inventory bois',
+				'timestamp'=>date('D M j, Y G:i:s T')
+			);
+		}
+
 
 		function add_record($dt) {
 			$sql = "INSERT INTO inventory_tb(item_name, item_desc, item_price, date_expiry, item_minimum, remarks, item_quant, modifiedBy) VALUES ('$dt->item_name', '$dt->item_desc', '$dt->item_price', '$dt->date_expiry', '$dt->item_minimum', '$dt->remarks', '$dt->item_quant', '$dt->modifiedBy')";

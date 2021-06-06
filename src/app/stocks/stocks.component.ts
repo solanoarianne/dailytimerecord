@@ -8,6 +8,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
 import {MatSort} from '@angular/material/sort';
+import { ArchiveComponent } from '../archive/archive.component';
 
 export interface StocksTable {
   item_id: number;
@@ -21,9 +22,6 @@ export interface StocksTable {
 
   
 }
-
-
-
 
 @Component({
   selector: 'app-stocks',
@@ -81,6 +79,9 @@ export class StocksComponent implements OnInit, AfterViewInit {
   addStocks() {
     this.dialog.open(StocksAddComponent);
   }
+  addArchive() {
+    this.dialog.open(ArchiveComponent);
+  }
   getName(){
     this.modifiedBy = localStorage.getItem("Fullname");
     }
@@ -135,9 +136,16 @@ pullProducts() {
     console.log(this.productInfoTableDataSource);
   })
 }
+pullArchive() {
+  this.ds.sendApiRequest("inventory_Archive", null).subscribe(data => {
+    this.productInfoTable = data.payload;
+    console.log(this.productInfoTable);
+    this.productInfoTableDataSource.data = this.productInfoTable;
+    console.log(this.productInfoTableDataSource);
+  })
+}
 
-
-
+//CRUD FUNCTIONS
 
 
 
@@ -149,6 +157,31 @@ async arcProduct(e) {
     this.pullProducts();
 });
 }
+//RECOVER Item
+async recProduct(e) {
+  this.prodInfo.item_id = e;
+  await this.ds.sendApiRequest("recProduct", this.prodInfo).subscribe(res => {
+    this.pullArchive();
+});
+}
+//CREATE
+async addProduct(){
+  this.prodInfo.item_name = this.item_name;
+  this.prodInfo.item_desc = this.item_desc;
+  this.prodInfo.item_quant = this.item_quant;
+  this.prodInfo.date_expiry = this.date_expiry;
+  this.prodInfo.item_price = this.item_price;
+  this.prodInfo.item_minimum = this.item_minimum;
+  this.prodInfo.remarks = this.remarks;
+  this.prodInfo.modifiedBy = this.modifiedBy;
+
+  console.log(this.prodInfo.modifiedBy);
+  
+  await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
+    this.pullProducts();
+  });
+}
+
 
 
 }
