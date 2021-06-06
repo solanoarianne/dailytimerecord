@@ -63,6 +63,7 @@ import { StocksComponent } from './stocks/stocks.component';
 import { SupplyComponent } from './supply/supply.component';
 import { StocksAddComponent } from './stocks/stocks-add/stocks-add.component';
 import { ArchiveComponent } from './archive/archive.component';
+import { EditStockComponent } from './modals/edit-stock/edit-stock.component';
 // HTTP
 
 @NgModule({
@@ -74,7 +75,8 @@ import { ArchiveComponent } from './archive/archive.component';
     StocksComponent,
     SupplyComponent,
     StocksAddComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    EditStockComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../services/data.service';
+import { EventTriggerService } from '../services/eventTrigger/event-trigger.service';
 
 export interface archiveTable {
   item_id: number;
@@ -64,7 +65,7 @@ export class ArchiveComponent implements OnInit, AfterViewInit {
   username: string
   username1: string
   
-  constructor(public dialog: MatDialog, private ds: DataService, private modalService: NgbModal) {}
+  constructor(public dialog: MatDialog, private ds: DataService, private modalService: NgbModal, private et: EventTriggerService) {}
 
   
   getName(){
@@ -110,6 +111,7 @@ export class ArchiveComponent implements OnInit, AfterViewInit {
         this.prodInfo.item_id = e;
         await this.ds.sendApiRequest("recProduct", this.prodInfo).subscribe(res => {
           this.pullArchive();
+          this.et.sendClickEvent();
       });
       }
 }

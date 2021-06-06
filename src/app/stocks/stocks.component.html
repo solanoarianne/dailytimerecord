@@ -106,7 +106,7 @@
                       <ng-container matColumnDef="ActionColumn">
                         <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action </th>
                         <td mat-cell *matCellDef="let element">
-                            <button mat-raised-button color="accent">Accent</button>
+                            <button mat-raised-button color="accent" (click)= "editStocks()">Accent</button>
                             <button mat-raised-button color="warn"  (click)="arcProduct(element.item_id);">Warn</button>
                         </td>
                       </ng-container>
@@ -115,7 +115,7 @@
                       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                   
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
                   </div>
 
                   <!-- END OF TABLE CONTENT -->

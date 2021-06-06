@@ -1,7 +1,7 @@
 <mat-list role="list">
 
     <div>
-        <h2>ADD STOCKS</h2>
+        <h2>Edit Stock</h2>
         <button mat-icon-button class="close-button" aria-label="Example icon-button with heart icon" mat-dialog-close>
         <mat-icon>close</mat-icon>
     </button>
@@ -27,7 +27,7 @@
 
         <mat-form-field class="description" appearance="outline">
             <mat-label>Description</mat-label>
-            <input matInput placeholder="Description" [(ngModel)] = "item_desc">
+            <input matInput placeholder="Description" [(ngModel)] = "item_desc" value="">
         </mat-form-field>
 
     </mat-list-item>
@@ -64,6 +64,6 @@
 
     </mat-list-item>
 
-    <button class="add-button" (click)="addProduct()" mat-flat-button color="warn">Add</button>
+    <button class="add-button"  mat-flat-button color="warn">Add</button>
 
 </mat-list>

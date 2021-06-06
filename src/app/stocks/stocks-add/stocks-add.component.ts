@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from 'src/app/services/data.service';
+import { EventTriggerService } from 'src/app/services/eventTrigger/event-trigger.service';
 
 export interface StocksTable {
   item_id: number;
@@ -73,33 +74,17 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
         this.productInfoTableDataSource.sort = this.sort;
       }
 
-      constructor(private ds: DataService, public router: Router, private modalService: NgbModal) { }
+      constructor(private ds: DataService, public router: Router, private modalService: NgbModal, private et: EventTriggerService) { }
   
         ngOnInit() {
-        this.pullProducts();
+
         //mapupunta yung name sa hidden na input sa add
         this.getName();
         //mapupunta yung name sa hidden na input sa edit
         this.getName1();
   }
-  logoutFunction(){
-    localStorage.clear();
-    this.router.navigate(['login']);
-  }
-// TABLE POPULATE
-// pullProducts() {
-//   this.ds.sendApiRequest("inventory", null).subscribe(data => {
-//     this.productInfoTable = data.payload;
-//     console.log(this.productInfoTable);
-//     this.productInfoTableDataSource.data = this.productInfoTable;
-//     console.log(this.productInfoTableDataSource);
-//   })
-// }
-pullProducts() {
-  this.ds.sendApiRequest("inventory", null).subscribe(data => {
-    this.products = data.data;
-  })
-}
+
+
 //CREATE
 async addProduct(){
   this.prodInfo.item_name = this.item_name;
@@ -111,10 +96,10 @@ async addProduct(){
   this.prodInfo.remarks = this.remarks;
   this.prodInfo.modifiedBy = this.modifiedBy;
 
-  console.log(this.prodInfo.modifiedBy);
+  console.log(this.prodInfo);
   
   await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
-    this.pullProducts();
+    this.et.sendClickEvent();
   });
 }
 }

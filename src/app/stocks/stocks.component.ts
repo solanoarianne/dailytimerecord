@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {StocksAddComponent} from './stocks-add/stocks-add.component';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from 'src/app/services/data.service';
@@ -9,6 +9,10 @@ import {MatTableDataSource} from '@angular/material/table';
 
 import {MatSort} from '@angular/material/sort';
 import { ArchiveComponent } from '../archive/archive.component';
+import { EventTriggerService } from '../services/eventTrigger/event-trigger.service';
+import { Subscription } from 'rxjs';
+import { EditStockComponent } from '../modals/edit-stock/edit-stock.component';
+
 
 export interface StocksTable {
   item_id: number;
@@ -72,16 +76,46 @@ export class StocksComponent implements OnInit, AfterViewInit {
   username: string
   username1: string
 
+  clickEvent: Subscription;
+
+  constructor(private et: EventTriggerService,public dialog: MatDialog, private ds: DataService, private modalService: NgbModal) {
 
 
-  constructor(public dialog: MatDialog, private ds: DataService, private modalService: NgbModal) {}
+    this.clickEvent = this.et.getClickEvent().subscribe(()=> {
+      this.pullProducts();
+    })
 
+
+  }
+
+
+  // openDialog(): void {
+  //   const dialogRef = this.dialog.open(StocksAddComponent, {
+  //     width: '250px',
+  //     data: {name: this.name, animal: this.animal}
+  //   });
+  // }
+  
+
+  editStocks(): void {
+    this.dialog.open(EditStockComponent, {
+      data: {
+        item_id: this.item_id, 
+        item_name: this.item_name
+            }
+    });
+  }
+  
   addStocks() {
     this.dialog.open(StocksAddComponent);
   }
+
   addArchive() {
     this.dialog.open(ArchiveComponent);
   }
+
+
+
   getName(){
     this.modifiedBy = localStorage.getItem("Fullname");
     }
