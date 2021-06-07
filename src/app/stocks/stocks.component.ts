@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {StocksAddComponent} from './stocks-add/stocks-add.component';
@@ -36,7 +36,36 @@ export interface StocksTable {
 export class StocksComponent implements OnInit, AfterViewInit {
 
   
-  
+  @ViewChild('EditDialog', { static: true }) EditDialog: TemplateRef<any>;
+
+  editModal = (i) => {
+    this.dialog.open(this.EditDialog);
+    this.item_name = i.item_name;
+    this.item_id = i.item_id;
+    this.item_desc = i.item_desc;
+    this.item_quant = i.item_quant;
+    this.item_price = i.item_price;
+    this.item_minimum = i.item_minimum;
+    this.remarks = i.remarks;
+    this.date_expiry = i.date_expiry;
+
+
+    this.prodInfo.item_name = this.item_name;
+    this.prodInfo.item_id = i.item_id;
+    this.prodInfo.item_desc = this.item_desc;
+    this.prodInfo.item_quant = this.item_quant;
+    this.prodInfo.item_minimum = this.item_minimum;
+    this.prodInfo.item_price = this.item_price;
+    this.prodInfo.remarks = this.remarks;
+    this.prodInfo.date_expiry = this.date_expiry;
+
+    console.log(this.prodInfo);
+
+  }
+
+
+
+
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -53,6 +82,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
     "Column6",
     "Column7",
     "Column8",
+    "Column9",
     "ActionColumn",
   
   ];
@@ -223,7 +253,20 @@ async addProduct(){
   });
 }
 
+// EDIT
+editProduct(e){
+  e.preventDefault();
 
+  this.prodInfo.modifiedBy = this.modifiedBy;
+
+
+  console.log(this.prodInfo);
+
+this.ds.sendApiRequest("editProduct", JSON.parse(JSON.stringify(this.prodInfo))).subscribe(data => {
+   this.pullProducts();
+  });
+
+}
 
 }
 

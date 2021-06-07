@@ -136,7 +136,7 @@
 
             $payload = $dt;
 
-            $this->sql = " UPDATE inventory_tb SET item_name='$dt->item_name1', item_desc='$dt->item_desc1', item_quant='$dt->item_quant1', date_expiry='$dt->date_expiry1', item_price='$dt->item_price1', item_minimum='$dt->item_minimum1', remarks='$dt->remarks1', modifiedBy='$dt->modifiedBy1' WHERE item_id='$dt->item_id1'";
+            $this->sql = " UPDATE inventory_tb SET item_name='$dt->item_name', item_desc='$dt->item_desc', item_quant='$dt->item_quant', date_expiry='$dt->date_expiry', item_price='$dt->item_price', item_minimum='$dt->item_minimum', remarks='$dt->remarks', modifiedBy='$dt->modifiedBy', dateModified = CURRENT_DATE() WHERE item_id='$dt->item_id'";
             $this->conn->query($this->sql);
             return $this->select('inventory_tb', null);
         }
