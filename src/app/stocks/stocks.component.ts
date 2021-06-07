@@ -230,7 +230,5 @@ async addProduct(){
 
 // const ELEMENT_DATA: StocksTable[] = [
 //   {position: 1, name: 'Adobong Burat', description: 'Masarap', quantity: 1, date_acquired: '20-05-2021', date_expiry: '23-05-2021', price: 150, minimum: 1, remakrs: '', date_modified: '20-05-21', modified_by: 'Euriel John'},
-
-  
 // ];
 

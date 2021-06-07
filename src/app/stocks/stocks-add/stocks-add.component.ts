@@ -44,6 +44,8 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
     "ActionColumn",
   
   ];
+
+  
  
   modifiedBy: any;
   modifiedBy1: any;
@@ -84,6 +86,14 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
         this.getName1();
   }
 
+  pullProducts() {
+    this.ds.sendApiRequest("inventory", null).subscribe(data => {
+      this.productInfoTable = data.payload;
+      console.log(this.productInfoTable);
+      this.productInfoTableDataSource.data = this.productInfoTable;
+      console.log(this.productInfoTableDataSource);
+    })
+  }
 
 //CREATE
 async addProduct(){
@@ -101,5 +111,24 @@ async addProduct(){
   await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
     this.et.sendClickEvent();
   });
+}
+//EDIT
+editForm = (products) => {
+  this.prodInfo.item_id    = products.item_id;
+  this.prodInfo.item_name = products.item_name;
+  this.prodInfo.item_desc = products.item_desc;
+  this.prodInfo.item_quant = products.item_quant;
+  this.prodInfo.date_expiry = products.date_expiry;
+  this.prodInfo.item_price = products.item_price;
+  this.prodInfo.item_minimum = products.item_minimum;
+  this.prodInfo.remarks1 = products.remarks1;
+}
+async editProduct(e){
+  e.preventDefault();
+  this.prodInfo.modifiedBy1 = this.modifiedBy1
+  console.log(this.prodInfo.modifiedBy1);
+  await this.ds.sendApiRequest("editProduct", this.prodInfo).subscribe(res => {
+    this.pullProducts();
+  })
 }
 }

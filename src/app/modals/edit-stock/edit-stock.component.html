@@ -43,14 +43,14 @@
 
         <mat-form-field class="price" appearance="outline">
             <mat-label>Price</mat-label>
-            <input matInput type="number" class="example-right-align"[(ngModel)] = "item_price">
+            <input matInput type="number" class="example-right-align"  [(ngModel)] = "item_price">
             <span matPrefix>₱&nbsp;</span>
             <span matSuffix>.00</span>
         </mat-form-field>
 
         <mat-form-field class="minimum" appearance="outline">
             <mat-label>Minimum</mat-label>
-            <input matInput type="number" placeholder="Minimum" [(ngModel)] = "item_minimum">
+            <input matInput type="number" placeholder="Minimum"  [(ngModel)] = "item_minimum">
         </mat-form-field>
 
     </mat-list-item>
@@ -59,11 +59,10 @@
 
         <mat-form-field class="remarks" appearance="outline">
             <mat-label>Remarks</mat-label>
-            <input matInput placeholder="Remarks" [(ngModel)] = "remarks">
+            <input matInput placeholder="Remarks"  [(ngModel)] = "remarks">
         </mat-form-field>
 
     </mat-list-item>
 
-    <button class="add-button"  mat-flat-button color="warn">Add</button>
-
+    <button class="add-button" (click)="editProduct($event);" mat-flat-button color="warn">Add</button>
 </mat-list>
