@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { EditStockComponent } from '../modals/edit-stock/edit-stock.component';
 
 
+
 export interface StocksTable {
   item_id: number;
   item_name: string;
@@ -34,6 +35,7 @@ export interface StocksTable {
 })
 export class StocksComponent implements OnInit, AfterViewInit {
 
+  
   
   @ViewChild(MatSort) sort: MatSort;
 
@@ -150,6 +152,8 @@ export class StocksComponent implements OnInit, AfterViewInit {
         this.getName1();
     
       }
+
+   
   
   logoutFunction(){
     localStorage.clear();
@@ -158,6 +162,9 @@ export class StocksComponent implements OnInit, AfterViewInit {
   
 
 
+  public doFilter = (value: string) => {
+    this.productInfoTableDataSource.filter = value.trim().toLocaleLowerCase();
+  }
 
 // TABLE POPULATE
 

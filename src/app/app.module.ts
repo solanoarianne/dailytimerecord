@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './components/main/main.component';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -64,7 +64,11 @@ import { SupplyComponent } from './supply/supply.component';
 import { StocksAddComponent } from './stocks/stocks-add/stocks-add.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { EditStockComponent } from './modals/edit-stock/edit-stock.component';
+import { EditServiceService } from './services/editService/edit-service.service';
+
 // HTTP
+
+
 
 @NgModule({
   declarations: [
@@ -86,6 +90,7 @@ import { EditStockComponent } from './modals/edit-stock/edit-stock.component';
     FontAwesomeModule,
     FormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
 
     // Material Cons Imports
    MatDatepickerModule,
@@ -130,7 +135,10 @@ import { EditStockComponent } from './modals/edit-stock/edit-stock.component';
        // HTTP
        HttpClientModule
   ],
-  providers: [],
+  exports: [MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,],
+  providers: [EditServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
