@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from 'src/app/services/data.service';
 import { EventTriggerService } from 'src/app/services/eventTrigger/event-trigger.service';
 
@@ -76,7 +75,7 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
         this.productInfoTableDataSource.sort = this.sort;
       }
 
-      constructor(private ds: DataService, public router: Router, private modalService: NgbModal, private et: EventTriggerService) { }
+      constructor(private ds: DataService, public router: Router, private et: EventTriggerService) { }
   
         ngOnInit() {
 

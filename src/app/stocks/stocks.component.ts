@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild, TemplateRef} from '@angula
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {StocksAddComponent} from './stocks-add/stocks-add.component';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 import { DataService } from 'src/app/services/data.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
@@ -110,7 +110,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   clickEvent: Subscription;
 
-  constructor(private et: EventTriggerService,public dialog: MatDialog, private ds: DataService, private modalService: NgbModal) {
+  constructor(private et: EventTriggerService,public dialog: MatDialog, private ds: DataService) {
 
 
     this.clickEvent = this.et.getClickEvent().subscribe(()=> {

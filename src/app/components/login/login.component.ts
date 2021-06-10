@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from 'src/app/services/data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -11,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  registerForm : FormGroup;
+  // registerForm : FormGroup;
   userInfo: any = {};
   inputVal: any;
   inputVal2: any;
@@ -22,25 +21,22 @@ export class LoginComponent implements OnInit {
   submitted = false;
   
 
-  constructor(private ds: DataService, public route: Router, private modalService: NgbModal) { }
+  constructor(private ds: DataService, public route: Router) { }
 
   ngOnInit(): void {
   }
 
-  regModal(contentRegister) {
-    this.modalService.open(contentRegister, { centered: true }); 
-  }
+ 
+  // async registerUser(){
+  //   this.submitted = true;
+  //   this.userInfo.uname = this.inputVal;
+  //   this.userInfo.pword = this.inputVal2;
+  //   this.userInfo.fname = this.inputVal3;
 
-  async registerUser(){
-    this.submitted = true;
-    this.userInfo.uname = this.inputVal;
-    this.userInfo.pword = this.inputVal2;
-    this.userInfo.fname = this.inputVal3;
-
-    await this.ds.sendApiRequest("registerUser", this.userInfo).subscribe(res => {
-      console.log(res);
-    })
-  }
+  //   await this.ds.sendApiRequest("registerUser", this.userInfo).subscribe(res => {
+  //     console.log(res);
+  //   })
+  // }
 
   async loginUser(){
     this.userInfo.uname = this.logUname;
