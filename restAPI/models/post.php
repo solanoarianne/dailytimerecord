@@ -55,8 +55,8 @@
 		function addProduct($dt) {
             $payload = $dt;
 
-            $this->sql = "INSERT INTO inventory_tb (item_name, item_desc, item_quant, date_expiry, item_price, item_minimum, remarks, modifiedBy, dateModified) VALUES 
-            ('$dt->item_name', '$dt->item_desc', '$dt->item_quant', '$dt->date_expiry', '$dt->item_price', '$dt->item_minimum', '$dt->remarks', '$dt->modifiedBy', CURRENT_DATE())"; 
+            $this->sql = "INSERT INTO inventory_tb (item_name, item_desc, item_quant, date_expiry, item_price, item_minimum, remarks, modifiedBy, dateModified, date_acquired) VALUES 
+            ('$dt->item_name', '$dt->item_desc', '$dt->item_quant', '$dt->date_expiry', '$dt->item_price', '$dt->item_minimum', '$dt->remarks', '$dt->modifiedBy', CURRENT_DATE(), CURRENT_DATE())"; 
             
             $this->conn->query($this->sql);
 
