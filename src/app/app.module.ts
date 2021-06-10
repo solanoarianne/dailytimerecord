@@ -65,6 +65,7 @@ import { StocksAddComponent } from './stocks/stocks-add/stocks-add.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { EditStockComponent } from './modals/edit-stock/edit-stock.component';
 import { EditServiceService } from './services/editService/edit-service.service';
+import { ItemHistoryComponent } from './components/item-history/item-history.component';
 
 // HTTP
 
@@ -80,7 +81,8 @@ import { EditServiceService } from './services/editService/edit-service.service'
     SupplyComponent,
     StocksAddComponent,
     ArchiveComponent,
-    EditStockComponent
+    EditStockComponent,
+    ItemHistoryComponent
   ],
   imports: [
     BrowserModule,

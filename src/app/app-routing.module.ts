@@ -6,6 +6,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { StocksComponent } from './stocks/stocks.component';
 import { SupplyComponent } from './supply/supply.component';
 import { Routes, RouterModule } from '@angular/router';
+import { ItemHistoryComponent } from './components/item-history/item-history.component';
 
 
 
@@ -31,7 +32,15 @@ const routes: Routes = [
     path: 'supply', 
     component: SupplyComponent,
   },
-  { path: '',   redirectTo: '/login', pathMatch: 'full' }
+  {
+    path: 'itemHistory',
+    component: ItemHistoryComponent
+  }
+  ,{ 
+    path: '',   
+    redirectTo: '/login', 
+    pathMatch: 'full' 
+  }
 
 ];
 

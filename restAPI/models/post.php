@@ -217,5 +217,53 @@
 			$this->conn->query($sql);
 			return $this->select('inventory_tb', null); 
 		}
+
+
+		// Item History Functions
+
+		function selectMY($dt){
+			$this->sql = "SELECT * FROM inventory_tb WHERE DATE_FORMAT(date_acquired, '%M') = '$dt->selectedMonth' AND YEAR(date_acquired) = '$dt->selectedYear'";
+
+			
+			if($result = $this->conn->query($this->sql)){
+				if($result->num_rows>0){
+					while($res = $result->fetch_assoc()){
+						array_push($this->data, $res);
+					}
+					$this->status = $this->success_stat;
+					http_response_code(200);
+				}
+			}
+			return array(
+				'status'=>$this->status,
+				'payload'=>$this->data,
+				'prepared_by'=>'Inventory bois',
+				'timestamp'=>date('D M j, Y G:i:s T')
+			);
+		}
+
+		function selectM($dt){
+			$this->sql = "SELECT * FROM inventory_tb WHERE DATE_FORMAT(date_acquired, '%M') = '$dt->selectedMonth'";
+
+			
+			if($result = $this->conn->query($this->sql)){
+				if($result->num_rows>0){
+					while($res = $result->fetch_assoc()){
+						array_push($this->data, $res);
+					}
+					$this->status = $this->success_stat;
+					http_response_code(200);
+				}
+			}
+			return array(
+				'status'=>$this->status,
+				'payload'=>$this->data,
+				'prepared_by'=>'Inventory bois',
+				'timestamp'=>date('D M j, Y G:i:s T')
+			);
+		}
+
+
+
 	} // end of Post() Class
 ?>

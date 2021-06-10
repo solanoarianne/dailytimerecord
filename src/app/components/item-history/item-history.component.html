@@ -37,14 +37,54 @@
                         <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
                           <mat-icon>person</mat-icon>
                       </button>
-                        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" type="button" (click)="logoutFunction();">
+                        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" type="button" >
                         <mat-icon>logout</mat-icon>
                     </button>
                     </mat-toolbar>
                 </div>
+
+    <div class="gridSize">
+                
+        <div class="topContent">
+
+            <div style="display: flex; flex-direction: column;">
+     
+                <label id="radioLabel">Item history</label> 
+                <mat-radio-group
+                aria-labelledby="radioLabel"
+                class="radioBtn"
+                [(ngModel)]="selectedMonth" (ngModelChange)="monthSelected();">
+            
+                <mat-radio-button class="example-radio-button" *ngFor="let filterBy of filterBy" [value]="filterBy">
+                {{filterBy}}
+                </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div>Your favorite season is: {{selectedMonth}}</div>
+
+        </div>
+    </div>
+    <!-- <div class="filtered">
+      <span *ngIf ="selectedMonth === 'All' || selectedMonth == null || selectedMonth == ''">
+      <h1>All Month And Year</h1>
+      </span>
+      <span *ngIf ="!(selectedMonth === '') &&!(selectedMonth === 'All') && selectedYear != null && selectedYear.length == 4 ">
+        <h1>{{selectedMonth}}, {{selectedYear}}</h1>
+      </span>
+      <span *ngIf ="(!(selectedMonth == 'All') && selectedYear.length <= 0)">
+        <h1>{{selectedMonth}}</h1>
+      </span>
+    </div> -->
+
+  
+
+
             </mat-sidenav-content>
         </mat-sidenav-container>
-    </div>
 
+      
+
+    </div>
 </body>
 
