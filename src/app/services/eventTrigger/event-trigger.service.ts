@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class EventTriggerService {
 
-  private subject = new Subject<any>();
+  private subject = new Subject<void>();
 
   sendClickEvent(){
     this.subject.next();
