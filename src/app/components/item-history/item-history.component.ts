@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-// import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
+import {FormControl} from '@angular/forms';
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -10,20 +11,19 @@ import {MatDatepicker} from '@angular/material/datepicker';
 // the `default as` syntax.
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
-// import {default as _rollupMoment, Moment} from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
 
-// const moment = _rollupMoment || _moment;
+const moment = _rollupMoment || _moment;
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'MMMM/YYYY',
   },
   display: {
-    dateInput: 'MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
+    dateInput: 'MMMM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
@@ -52,15 +52,33 @@ export interface StocksTable {
 @Component({
   selector: 'app-item-history',
   templateUrl: './item-history.component.html',
-  styleUrls: ['./item-history.component.css']
+  styleUrls: ['./item-history.component.css'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class ItemHistoryComponent implements OnInit {
+
+
 
   selectedMonth: any;
   selectedYear: any = [];
 
   selectedFilter: any = {};
   selected: any;
+  selectedMY: any;
+
+  initYear: any;
+  initMonth: any;
 
   months: month[] = [
     {value: 'All', viewValue: 'All'},
@@ -89,7 +107,46 @@ export class ItemHistoryComponent implements OnInit {
   }
 
 
+
+
+
+  date = new FormControl(moment());
+
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+
+    this.selectedFilter.selectedYear = normalizedYear.year();
+
+  }
+
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value;
+    ctrlValue.month(normalizedMonth.month());
+    datepicker.close();
+    this.date.setValue(ctrlValue);
+
+    this.selectedFilter.selectedMonth= normalizedMonth.month();
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   monthSelected(){
+
+    console.log(this.selectedFilter);
 
     // SELECT BY MONTH AND YEAR
     // if(this.selectedYear.length == 4 && this.selectedMonth != null){
@@ -152,6 +209,16 @@ export class ItemHistoryComponent implements OnInit {
  });
 
   }
+
+ // SELECT BY MONTH AND YEAR
+   else if(this.selectedYear != null   && this.selectedMonth != null){
+      console.log("SELECT BY MONTH AND YEAR");
+      console.log(this.selectedFilter);
+        this.ds.sendApiRequest("selectMY", this.selectedFilter).subscribe(data => {
+          this.selected = data.data;
+      });
+    }
+
 
   }
 }

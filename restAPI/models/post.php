@@ -222,7 +222,7 @@
 		// Item History Functions
 
 		function selectMY($dt){
-			$this->sql = "SELECT * FROM inventory_tb WHERE DATE_FORMAT(date_acquired, '%M') = '$dt->selectedMonth' AND YEAR(date_acquired) = '$dt->selectedYear'";
+			$this->sql = "SELECT * FROM inventory_tb WHERE MONTH(date_acquired) = '$dt->selectedMonth' AND YEAR(date_acquired) = '$dt->selectedYear'";
 
 			
 			if($result = $this->conn->query($this->sql)){

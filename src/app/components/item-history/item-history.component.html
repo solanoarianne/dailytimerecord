@@ -61,7 +61,17 @@
                 </mat-radio-group>
             </div>
 
-            <div>Your favorite season is: {{selectedMonth}}</div>
+            <mat-form-field appearance="outline" >
+                <mat-label>Month and Year</mat-label>
+                <input id="selectedMy"[disabled] = "selectedMonth == 'All' || selectedMonth == null" matInput [matDatepicker]="dp" [formControl]="date" (ngModelChange) ="monthSelected();">
+                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp
+                                startView="multi-year"
+                                (yearSelected)="chosenYearHandler($event)"
+                                (monthSelected)="chosenMonthHandler($event, dp)"
+                                panelClass="example-month-picker">
+                </mat-datepicker>
+              </mat-form-field>
 
         </div>
     </div>
@@ -78,7 +88,6 @@
     </div> -->
 
   
-
 
             </mat-sidenav-content>
         </mat-sidenav-container>
