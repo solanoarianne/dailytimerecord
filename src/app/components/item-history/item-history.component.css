@@ -128,6 +128,36 @@ mat-radio-button {
   font-size: 30px;
 }
 
+:host ::ng-deep .mat-radio-container {
+  height: 20px;
+  width: 20px;
+  margin-right: 10%;
+}
+:host ::ng-deep .mat-radio-outer-circle {
+  height: 20px;
+  width: 20px;
+}
+:host ::ng-deep .mat-radio-inner-circle {
+  height: 20px;
+  width: 20px;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  opacity: 0.1 !important; /*click effect color change*/
+  background-color: #357555 !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #357555 !important; /*inner circle color change*/
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: #357555 !important; /*outer ring color change*/
+}
+
+/* DATE PICKER STYLES */
+
 /* TABLE STYLES GOES HERE */
 table {
   width: 100%;

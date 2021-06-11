@@ -89,7 +89,7 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
 
 
 
-
+  inputDisable = true;
 
 
   selectedMonth: string = 'All';
@@ -112,8 +112,9 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
   constructor(private ds: DataService) { }
 
   ngOnInit(): void {
-
+    this.datePicker.controls['date1'].disable();
     this.monthSelected();
+   
   }
 
 
@@ -126,7 +127,8 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
 
 
   datePicker = new FormGroup({
-    date1: new FormControl()
+    date1: new FormControl(),
+    date2: new FormControl()
  });
 
 
@@ -169,6 +171,7 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
 
   if(this.selectedMonth === "All"){
     this.datePicker.controls['date1'].disable();
+    this.inputDisable = true;
     console.log(this.selectedMonth);
     this.ds.sendApiRequest("inventory", null).subscribe(data => {
       this.selected = data.data;
@@ -182,7 +185,8 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
   }
 
   else if (this.selectedMonth === "Specific Month And Year"){
-    this.datePicker.controls['date1'].enable();
+    this.datePicker.controls['date1'].disable();
+    this.inputDisable = false;
     if(count == 2){
       console.log("you can send spi request now");
       this.ds.sendApiRequest("selectMY", this.selectedFilter).subscribe(data => {

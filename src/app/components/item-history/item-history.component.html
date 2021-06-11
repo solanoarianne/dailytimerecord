@@ -49,7 +49,7 @@
 
             <div style="display: flex; flex-direction: column;">
      
-                <label id="radioLabel">Item history</label> 
+                <label id="radioLabel">Filter By</label> 
                 <mat-radio-group
                 aria-labelledby="radioLabel"
                 class="radioBtn"
@@ -64,8 +64,9 @@
             <mat-form-field appearance="outline" >
                 <mat-label>Month and Year</mat-label>
                 <input id="selectedMy" formControlName= "date1" matInput [matDatepicker]="dp" [formControl]="date" (ngModelChange) ="monthSelected();">
-                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                <mat-datepicker #dp 
+                <mat-datepicker-toggle  matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker disabled = "{{inputDisable}}" #dp 
+                
                                 startView="multi-year"
                                 (yearSelected)="chosenYearHandler($event)"
                                 (monthSelected)="chosenMonthHandler($event, dp)"
@@ -83,55 +84,55 @@
       
           <!-- ID Column -->
           <ng-container matColumnDef="Column1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef> ID </th>
             <td mat-cell *matCellDef="let element"> {{element.item_id}} </td>
           </ng-container>
       
           <!-- ITEM_Name Column -->
           <ng-container matColumnDef="Column2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+            <th mat-header-cell *matHeaderCellDef> Product Name </th>
             <td mat-cell *matCellDef="let element"> {{element.item_name}} </td>
           </ng-container>
       
           <!-- Item_desc Column -->
           <ng-container matColumnDef="Column3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <th mat-header-cell *matHeaderCellDef> Description </th>
             <td mat-cell *matCellDef="let element"> {{element.item_desc}} </td>
           </ng-container>
       
           <!-- item_quant Column -->
           <ng-container matColumnDef="Column4">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+            <th mat-header-cell *matHeaderCellDef> Quantity </th>
             <td mat-cell *matCellDef="let element"> {{element.item_quant}} </td>
           </ng-container>
 
           <!-- item_minimum Column -->
           <ng-container matColumnDef="Column5">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Minimum </th>
+            <th mat-header-cell *matHeaderCellDef> Minimum </th>
             <td mat-cell *matCellDef="let element"> {{element.item_minimum}} </td>
           </ng-container>
 
            <!-- item_price Column -->
            <ng-container matColumnDef="Column6">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <th mat-header-cell *matHeaderCellDef> Price </th>
             <td mat-cell *matCellDef="let element"> {{element.item_price}} </td>
           </ng-container>
         
           <!-- date_expiry Column -->
           <ng-container matColumnDef="Column7">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> DateExpiry </th>
+            <th mat-header-cell *matHeaderCellDef> DateExpiry </th>
             <td mat-cell *matCellDef="let element"> {{element.date_expiry  |  date: 'MMM d, y'}}</td>
           </ng-container>
 
            <!-- remarks Column -->
            <ng-container matColumnDef="Column8">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+            <th mat-header-cell *matHeaderCellDef> Remarks </th>
             <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
           </ng-container>
 
           <!-- modifiedBy Column -->
           <ng-container matColumnDef="Column9">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> modifiedBy </th>
+            <th mat-header-cell *matHeaderCellDef> modifiedBy </th>
             <td mat-cell *matCellDef="let element" style="text-align: center;">{{element.modifiedBy}} <br> {{element.dateModified  |  date: 'MMM d, y' }} </td>
           </ng-container>
 
