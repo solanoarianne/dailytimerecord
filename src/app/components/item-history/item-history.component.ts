@@ -1,9 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormBuilder, FormGroup} from '@angular/forms';
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -12,6 +12,9 @@ import {FormControl} from '@angular/forms';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment, Moment} from 'moment';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 const moment = _rollupMoment || _moment;
 
@@ -29,12 +32,6 @@ export const MY_FORMATS = {
 };
 
 
-
-
-interface month {
-  value: string;
-  viewValue: string;
-}
 
 export interface StocksTable {
   item_id: number;
@@ -66,11 +63,36 @@ export interface StocksTable {
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
-export class ItemHistoryComponent implements OnInit {
+export class ItemHistoryComponent implements OnInit, AfterViewInit {
 
 
 
-  selectedMonth: any;
+  @ViewChild(MatSort) sort: MatSort;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  productInfoTable: StocksTable []  = [];
+  productInfoTableDataSource = new MatTableDataSource(this.productInfoTable);
+  displayedColumns: string[] = [
+
+    "Column1",
+    "Column2",
+    "Column3",
+    "Column4",
+    "Column5",
+    "Column6",
+    "Column7",
+    "Column8",
+ 
+  
+  ];
+
+
+
+
+
+
+
+  selectedMonth: string = 'All';
   selectedYear: any = [];
 
   selectedFilter: any = {};
@@ -80,23 +102,11 @@ export class ItemHistoryComponent implements OnInit {
   initYear: any;
   initMonth: any;
 
-  months: month[] = [
-    {value: 'All', viewValue: 'All'},
-    {value: 'January', viewValue: 'January'},
-    {value: 'February', viewValue: 'February'},
-    {value: 'March', viewValue: 'March'},
-    {value: 'April', viewValue: 'April'},
-    {value: 'May', viewValue: 'May'},
-    {value: 'June', viewValue: 'June'},
-    {value: 'July', viewValue: 'July'},
-    {value: 'August', viewValue: 'August'},
-    {value: 'September', viewValue: 'September'},
-    {value: 'October', viewValue: 'October'},
-    {value: 'November', viewValue: 'November'},
-    {value: 'December', viewValue: 'December'}
-  ];
+  selectedMYBool = false;
 
-  favoriteSeason: string;
+  
+
+
   filterBy: string[] = ['All', 'Specific Month And Year'];
 
   constructor(private ds: DataService) { }
@@ -107,118 +117,84 @@ export class ItemHistoryComponent implements OnInit {
   }
 
 
+  ngAfterViewInit() {
+    this.productInfoTableDataSource.paginator = this.paginator;
+    this.productInfoTableDataSource.sort = this.sort;
+  }
 
 
+
+
+  datePicker = new FormGroup({
+    date1: new FormControl()
+ });
+
+
+
+//  DATE PICKER PROPERTIES
 
   date = new FormControl(moment());
 
   chosenYearHandler(normalizedYear: Moment) {
+    this.selectedFilter.selectedYear = normalizedYear.year();
     const ctrlValue = this.date.value;
     ctrlValue.year(normalizedYear.year());
     this.date.setValue(ctrlValue);
 
-    this.selectedFilter.selectedYear = normalizedYear.year();
-
+   
+    
   }
 
   chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    
+    this.selectedFilter.selectedMonth= normalizedMonth.month() + 1;
     const ctrlValue = this.date.value;
     ctrlValue.month(normalizedMonth.month());
-    datepicker.close();
+    
     this.date.setValue(ctrlValue);
-
-    this.selectedFilter.selectedMonth= normalizedMonth.month();
+    datepicker.close();
 
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+// MAIN FUNCTION
   monthSelected(){
 
-    console.log(this.selectedFilter);
+    var count = Object.keys(this.selectedFilter).length;
+    console.log(count);
 
-    // SELECT BY MONTH AND YEAR
-    // if(this.selectedYear.length == 4 && this.selectedMonth != null){
-    //   console.log("SELECT BY MONTH AND YEAR");
-    //   this.selectedFilter.selectedYear = this.selectedYear;
-    //   this.selectedFilter.selectedMonth = this.selectedMonth;
-    //     this.ds.sendApiRequest("selectMY", this.selectedFilter).subscribe(data => {
-    //       this.selected = data.data;
-    //   });
-    // }
-    
+ 
+     
 
-    // SELECT ONLY BY MONTH
-    // else if(this.selectedMonth != null || this.selectedMonth != "All" && this.selectedYear == null){
-
-    //   if (this.selectedMonth === "All")
-    //   {
-    //  SELECT ALL
-      //   this.selectedYear = null;
-      //   console.log("ALL YEAH")
-      //   this.ds.sendApiRequest("inventory", null).subscribe(data => {
-      //     this.selected = data.data;
-      //   });
-      // }
-      // else
-      
-      // {
-      //   console.log("SELECT BY MONTH");
-      //   this.selectedFilter.selectedMonth = this.selectedMonth;
-      //   this.ds.sendApiRequest("selectM", this.selectedFilter).subscribe(data => {
-      //     this.selected = data.data;
-      // });
-
-      // }
-      
-      
-  //   }
-
-  //   // SELECT ONLY BY YEAR
-  //   else if(this.selectedYear.length == 4 && this.monthSelected == null){
-  //     console.log("SELECT BY YEAR");
-  //   }
-
-  //   // SELECT ALL
-  //   else if (this.selectedMonth == "" || this.selectedMonth == null)
-  //   {
-
-  //     console.log("HELLO");
-  //     this.ds.sendApiRequest("inventory", null).subscribe(data => {
-  //       this.selected = data.data;
-  //     });
-
-  //   }
-   
-  // }
 
   if(this.selectedMonth === "All"){
+    this.datePicker.controls['date1'].disable();
+    console.log(this.selectedMonth);
     this.ds.sendApiRequest("inventory", null).subscribe(data => {
       this.selected = data.data;
+      this.productInfoTable = data.payload;
+      this.productInfoTableDataSource = data.payload;
+      
+    
  });
 
+   
   }
 
- // SELECT BY MONTH AND YEAR
-   else if(this.selectedYear != null   && this.selectedMonth != null){
-      console.log("SELECT BY MONTH AND YEAR");
-      console.log(this.selectedFilter);
-        this.ds.sendApiRequest("selectMY", this.selectedFilter).subscribe(data => {
-          this.selected = data.data;
-      });
+  else if (this.selectedMonth === "Specific Month And Year"){
+    this.datePicker.controls['date1'].enable();
+    if(count == 2){
+      console.log("you can send spi request now");
+      this.ds.sendApiRequest("selectMY", this.selectedFilter).subscribe(data => {
+        this.productInfoTable = data.payload;
+      this.productInfoTableDataSource = data.payload;
+       
+   });
+    }   
+  }
+
     }
 
-
+  
   }
-}
+

@@ -6,10 +6,10 @@ import { Observable, Subject } from 'rxjs';
 })
 export class EventTriggerService {
 
-  private subject = new Subject<void>();
+  private subject = new Subject<any>();
 
   sendClickEvent(){
-    this.subject.next();
+    this.subject.next(this.subject);
   }
 
   getClickEvent():Observable<any>{

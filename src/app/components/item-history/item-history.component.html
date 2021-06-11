@@ -55,37 +55,94 @@
                 class="radioBtn"
                 [(ngModel)]="selectedMonth" (ngModelChange)="monthSelected();">
             
-                <mat-radio-button class="example-radio-button" *ngFor="let filterBy of filterBy" [value]="filterBy">
+                <mat-radio-button class="example-radio-button" *ngFor="let filterBy of filterBy" [value]="filterBy" [checked] = "filterBy == 'All'">
                 {{filterBy}}
                 </mat-radio-button>
                 </mat-radio-group>
             </div>
-
+            <div [formGroup] = "datePicker">
             <mat-form-field appearance="outline" >
                 <mat-label>Month and Year</mat-label>
-                <input id="selectedMy"[disabled] = "selectedMonth == 'All' || selectedMonth == null" matInput [matDatepicker]="dp" [formControl]="date" (ngModelChange) ="monthSelected();">
+                <input id="selectedMy" formControlName= "date1" matInput [matDatepicker]="dp" [formControl]="date" (ngModelChange) ="monthSelected();">
                 <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                <mat-datepicker #dp
+                <mat-datepicker #dp 
                                 startView="multi-year"
                                 (yearSelected)="chosenYearHandler($event)"
                                 (monthSelected)="chosenMonthHandler($event, dp)"
                                 panelClass="example-month-picker">
                 </mat-datepicker>
               </mat-form-field>
-
+            </div>      
         </div>
     </div>
-    <!-- <div class="filtered">
-      <span *ngIf ="selectedMonth === 'All' || selectedMonth == null || selectedMonth == ''">
-      <h1>All Month And Year</h1>
-      </span>
-      <span *ngIf ="!(selectedMonth === '') &&!(selectedMonth === 'All') && selectedYear != null && selectedYear.length == 4 ">
-        <h1>{{selectedMonth}}, {{selectedYear}}</h1>
-      </span>
-      <span *ngIf ="(!(selectedMonth == 'All') && selectedYear.length <= 0)">
-        <h1>{{selectedMonth}}</h1>
-      </span>
-    </div> -->
+  
+     <!-- TABLE SECTION -->
+
+     <div class="mat-elevation-z8 tableSize">
+        <table mat-table [dataSource]="productInfoTableDataSource"  matSort>
+      
+          <!-- ID Column -->
+          <ng-container matColumnDef="Column1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_id}} </td>
+          </ng-container>
+      
+          <!-- ITEM_Name Column -->
+          <ng-container matColumnDef="Column2">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_name}} </td>
+          </ng-container>
+      
+          <!-- Item_desc Column -->
+          <ng-container matColumnDef="Column3">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_desc}} </td>
+          </ng-container>
+      
+          <!-- item_quant Column -->
+          <ng-container matColumnDef="Column4">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_quant}} </td>
+          </ng-container>
+
+          <!-- item_minimum Column -->
+          <ng-container matColumnDef="Column5">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Minimum </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_minimum}} </td>
+          </ng-container>
+
+           <!-- item_price Column -->
+           <ng-container matColumnDef="Column6">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.item_price}} </td>
+          </ng-container>
+        
+          <!-- date_expiry Column -->
+          <ng-container matColumnDef="Column7">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DateExpiry </th>
+            <td mat-cell *matCellDef="let element"> {{element.date_expiry  |  date: 'MMM d, y'}}</td>
+          </ng-container>
+
+           <!-- remarks Column -->
+           <ng-container matColumnDef="Column8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+            <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+          </ng-container>
+
+          <!-- modifiedBy Column -->
+          <ng-container matColumnDef="Column9">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> modifiedBy </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;">{{element.modifiedBy}} <br> {{element.dateModified  |  date: 'MMM d, y' }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+      </div>
+
+      <!-- END OF TABLE CONTENT -->
 
   
 

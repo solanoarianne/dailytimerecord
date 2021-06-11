@@ -100,6 +100,12 @@ mat-sidenav {
   background-color: #5cb3fd;
 }
 
+/* RADIO BUTTONS STYLES */
+
+.gridSize {
+  margin-bottom: 5%;
+}
+
 .topContent {
   width: 70%;
   height: 100px !important;
@@ -111,23 +117,6 @@ mat-sidenav {
   justify-content: space-between;
 }
 
-.filtered {
-  margin-left: 2%;
-  height: 5%;
-  align-items: center;
-  justify-content: center;
-}
-
-.monthField {
-  width: 50%;
-  margin: auto;
-}
-
-.yearField {
-  width: 50%;
-  margin: auto;
-}
-
 mat-radio-button {
   padding: 10%;
   margin-left: 5%;
@@ -137,4 +126,16 @@ mat-radio-button {
   text-align: center;
   margin-right: 30%;
   font-size: 30px;
+}
+
+/* TABLE STYLES GOES HERE */
+table {
+  width: 100%;
+  font-family: Poppins;
+}
+
+.tableSize {
+  width: 80%;
+  margin-top: 5%;
+  margin: auto;
 }

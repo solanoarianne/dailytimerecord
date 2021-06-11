@@ -40,24 +40,17 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   editModal = (i) => {
     this.dialog.open(this.EditDialog);
-    this.item_name = i.item_name;
-    this.item_id = i.item_id;
-    this.item_desc = i.item_desc;
-    this.item_quant = i.item_quant;
-    this.item_price = i.item_price;
-    this.item_minimum = i.item_minimum;
-    this.remarks = i.remarks;
-    this.date_expiry = i.date_expiry;
+    this.item_name1 = i.item_name;
+    this.item_id1 = i.item_id;
+    this.item_desc1 = i.item_desc;
+    this.item_quant1 = i.item_quant;
+    this.item_price1 = i.item_price;
+    this.item_minimum1 = i.item_minimum;
+    this.remarks1 = i.remarks;
+    this.date_expiry1 = i.date_expiry;
 
 
-    this.prodInfo.item_name = this.item_name;
-    this.prodInfo.item_id = i.item_id;
-    this.prodInfo.item_desc = this.item_desc;
-    this.prodInfo.item_quant = this.item_quant;
-    this.prodInfo.item_minimum = this.item_minimum;
-    this.prodInfo.item_price = this.item_price;
-    this.prodInfo.remarks = this.remarks;
-    this.prodInfo.date_expiry = this.date_expiry;
+   
 
     console.log(this.prodInfo);
 
@@ -107,6 +100,15 @@ export class StocksComponent implements OnInit, AfterViewInit {
   remarks: any;
   username: string
   username1: string
+
+  item_id1: any;
+  item_name1: any;
+  item_desc1: any;
+  item_quant1: any;
+  date_expiry1: any;
+  item_price1: any;
+  item_minimum1: any;
+  remarks1: any;
 
   clickEvent: Subscription;
 
@@ -257,13 +259,23 @@ async addProduct(){
 editProduct(e){
   e.preventDefault();
 
+  this.prodInfo.item_name = this.item_name1;
+  this.prodInfo.item_id = this.item_id1;
+  this.prodInfo.item_desc = this.item_desc1;
+  this.prodInfo.item_quant = this.item_quant1;
+  this.prodInfo.item_minimum = this.item_minimum1;
+  this.prodInfo.item_price = this.item_price1;
+  this.prodInfo.remarks = this.remarks1;
+  this.prodInfo.date_expiry = this.date_expiry1;
+
   this.prodInfo.modifiedBy = this.modifiedBy;
 
 
   console.log(this.prodInfo);
 
-this.ds.sendApiRequest("editProduct", JSON.parse(JSON.stringify(this.prodInfo))).subscribe(data => {
-   this.pullProducts();
+this.ds.sendApiRequest("editProduct", this.prodInfo).subscribe(data => {
+
+this.pullProducts();
   });
 
 }

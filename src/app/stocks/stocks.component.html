@@ -149,12 +149,13 @@
               <mat-form-field class="product-name" appearance="outline">
             
                   <mat-label>Product Name</mat-label>
-                  <input matInput placeholder="Product Name" [(ngModel)] = "item_name">
+                  <input matInput hidden placeholder="Product Name" [(ngModel)] = "item_id1">
+                  <input matInput placeholder="Product Name" [(ngModel)] = "item_name1">
               </mat-form-field>
       
               <mat-form-field class="quantity" appearance="outline">
                   <mat-label>Quantity</mat-label>
-                  <input matInput type="number" placeholder="Quantity" [(ngModel)] = "item_quant">
+                  <input matInput type="number" placeholder="Quantity" [(ngModel)] = "item_quant1">
               </mat-form-field>
       
           </mat-list-item>
@@ -163,7 +164,7 @@
       
               <mat-form-field class="description" appearance="outline">
                   <mat-label>Description</mat-label>
-                  <input matInput placeholder="Description" [(ngModel)] = "item_desc" value="">
+                  <input matInput placeholder="Description" [(ngModel)] = "item_desc1" value="">
               </mat-form-field>
       
           </mat-list-item>
@@ -172,21 +173,21 @@
       
               <mat-form-field class="date-expiry" appearance="outline">
                   <mat-label>Date Expiry</mat-label>
-                  <input matInput placeholder="Date Expiry" [matDatepicker]="picker" [(ngModel)] = "date_expiry">
+                  <input matInput placeholder="Date Expiry" [matDatepicker]="picker" [(ngModel)] = "date_expiry1">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
       
               <mat-form-field class="price" appearance="outline">
                   <mat-label>Price</mat-label>
-                  <input matInput type="number" class="example-right-align"  [(ngModel)] = "item_price">
+                  <input matInput type="number" class="example-right-align"  [(ngModel)] = "item_price1">
                   <span matPrefix>₱&nbsp;</span>
                   <span matSuffix>.00</span>
               </mat-form-field>
       
               <mat-form-field class="minimum" appearance="outline">
                   <mat-label>Minimum</mat-label>
-                  <input matInput type="number" placeholder="Minimum"  [(ngModel)] = "item_minimum">
+                  <input matInput type="number" placeholder="Minimum"  [(ngModel)] = "item_minimum1">
               </mat-form-field>
       
           </mat-list-item>
@@ -195,7 +196,7 @@
       
               <mat-form-field class="remarks" appearance="outline">
                   <mat-label>Remarks</mat-label>
-                  <input matInput placeholder="Remarks"  [(ngModel)] = "remarks">
+                  <input matInput placeholder="Remarks"  [(ngModel)] = "remarks1">
               </mat-form-field>
       
           </mat-list-item>
