@@ -40,81 +40,86 @@
                     </mat-toolbar>
                 </div>
 
-                <button class="add-button" (click)="addStocks()" mat-flat-button>Add Stocks</button>
+  
+                <div class="btns">
+                  <button class="add-button" (click)="addStocks()" mat-flat-button><mat-icon class="aligned-with-icon">add_circle_outline</mat-icon> Add Stocks</button>
+                  <button class="view-archives" (click)="addArchive()" matBadge="{{archiveCounter}}"  matBadgeColor="warn"   mat-flat-button><mat-icon class="aligned-with-icon">folder_open</mat-icon><span class="aligned-with-icon"> Archives </span></button>
+                </div>
+                <mat-form-field class="search"autocomplete="off">
+                  
+                  <mat-label search><mat-icon class="aligned-with-icon1"  style="font-size: 25px;">search</mat-icon><span class="iLabel">Search</span></mat-label>
+                  <input  autocomplete="off" matInput class="searchField" (keyup)="doFilter($event.target.value)" >
+              </mat-form-field>
 
-                <mat-form-field class="search">
-                    <mat-label search>Search</mat-label>
-                    <input matInput (keyup)="doFilter($event.target.value)" >
-                </mat-form-field>
-                <button class="add-button" (click)="addArchive()" style="float: right;"  mat-flat-button>Archive</button>
-
-
+              
                 <!-- TABLE SECTION -->
-
+               
                 <div class="mat-elevation-z8 tableSize">
                     <table mat-table [dataSource]="productInfoTableDataSource"  matSort>
                   
                       <!-- ID Column -->
-                      <ng-container matColumnDef="Column1">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                        <td mat-cell *matCellDef="let element"> {{element.item_id}} </td>
+                      <ng-container matColumnDef="Column1" >
+                        <th mat-header-cell class="th" *matHeaderCellDef  hidden> ID </th>
+                        <td mat-cell class="td" *matCellDef="let element" hidden> {{element.item_id}} </td>
                       </ng-container>
                   
                       <!-- ITEM_Name Column -->
                       <ng-container matColumnDef="Column2">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.item_name}} </td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > Product Name </th>
+                        <td mat-cell class="td"  *matCellDef="let element"> {{element.item_name}} </td>
                       </ng-container>
                   
                       <!-- Item_desc Column -->
                       <ng-container matColumnDef="Column3">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-                        <td mat-cell *matCellDef="let element"> {{element.item_desc}} </td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > Description </th>
+                        <td mat-cell class="td desc"  *matCellDef="let element"> {{element.item_desc}} </td>
                       </ng-container>
                   
                       <!-- item_quant Column -->
                       <ng-container matColumnDef="Column4">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
-                        <td mat-cell *matCellDef="let element"> {{element.item_quant}} </td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > Quantity </th>
+                        <td mat-cell class="td"  *matCellDef="let element"> {{element.item_quant | number}} </td>
                       </ng-container>
 
                       <!-- item_minimum Column -->
                       <ng-container matColumnDef="Column5">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Minimum </th>
-                        <td mat-cell *matCellDef="let element"> {{element.item_minimum}} </td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > Minimum </th>
+                        <td mat-cell  class="td"  *matCellDef="let element"> {{element.item_minimum | number}} </td>
                       </ng-container>
 
                        <!-- item_price Column -->
                        <ng-container matColumnDef="Column6">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-                        <td mat-cell *matCellDef="let element"> {{element.item_price}} </td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > Price </th>
+                        <td mat-cell class="td"   *matCellDef="let element"> {{element.item_price | number}} </td>
                       </ng-container>
                     
                       <!-- date_expiry Column -->
                       <ng-container matColumnDef="Column7">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> DateExpiry </th>
-                        <td mat-cell *matCellDef="let element"> {{element.date_expiry  |  date: 'MMM d, y'}}</td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > DateExpiry </th>
+                        <td mat-cell class="td"   *matCellDef="let element"> {{element.date_expiry  |  date: 'MMM d, y'}}</td>
                       </ng-container>
 
                        <!-- remarks Column -->
                        <ng-container matColumnDef="Column8">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
-                        <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > Remarks </th>
+                        <td mat-cell class="td"  *matCellDef="let element"> {{element.remarks}} </td>
                       </ng-container>
 
                       <!-- modifiedBy Column -->
                       <ng-container matColumnDef="Column9">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> modifiedBy </th>
-                        <td mat-cell *matCellDef="let element" style="text-align: center;">{{element.modifiedBy}} <br> {{element.dateModified  |  date: 'MMM d, y' }} </td>
+                        <th mat-header-cell class="th" *matHeaderCellDef > modifiedBy </th>
+                        <td mat-cell class="td"  *matCellDef="let element" style="text-align: center;">{{element.modifiedBy}} <br> {{element.dateModified  |  date: 'MMM d, y' }} </td>
                       </ng-container>
 
                       <!-- remarks Column -->
                       <ng-container matColumnDef="ActionColumn">
                         <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action </th>
-                        <td mat-cell *matCellDef="let element">
-                            <button mat-raised-button color="accent" (click)= "editModal(element)">Edit</button>
-                            <button mat-raised-button color="warn"  (click)="arcProduct(element.item_id);">Warn</button>
-                        </td>
+                        <td mat-cell  *matCellDef="let element">
+                          <div class="actBtn">
+                            <button mat-raised-button class="edit-button" color="success" (click)= "editModal(element)"><mat-icon class="editIcon">edit</mat-icon> Edit </button> <br> <br>
+                            <button mat-raised-button class="archive-button"  (click)="arcProduct(element.item_id);"><mat-icon class="archiveIcon">archive</mat-icon>Archive</button>
+                          </div>
+                          </td>
                       </ng-container>
                   
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -136,10 +141,11 @@
         <mat-list role="list">
 
           <div>
-              <h2>Edit Stock</h2>
+              <h2>Edit Stock
               <button mat-icon-button class="close-button" aria-label="Example icon-button with heart icon" mat-dialog-close>
               <mat-icon>close</mat-icon>
           </button>
+        </h2>
           </div>
       
           <mat-divider></mat-divider>
@@ -148,14 +154,14 @@
       
               <mat-form-field class="product-name" appearance="outline">
             
-                  <mat-label>Product Name</mat-label>
+                  <mat-label class="label-editstocks">Product Name</mat-label>
                   <input matInput hidden placeholder="Product Name" [(ngModel)] = "item_id1">
-                  <input matInput placeholder="Product Name" [(ngModel)] = "item_name1">
+                  <input matInput class="input-editstocks" placeholder="Product Name" [(ngModel)] = "item_name1">
               </mat-form-field>
       
               <mat-form-field class="quantity" appearance="outline">
                   <mat-label>Quantity</mat-label>
-                  <input matInput type="number" placeholder="Quantity" [(ngModel)] = "item_quant1">
+                  <input matInput class="input-editstocks" type="number" placeholder="Quantity" [(ngModel)] = "item_quant1">
               </mat-form-field>
       
           </mat-list-item>
@@ -163,8 +169,8 @@
           <mat-list-item class="second-row" role="listitem">
       
               <mat-form-field class="description" appearance="outline">
-                  <mat-label>Description</mat-label>
-                  <input matInput placeholder="Description" [(ngModel)] = "item_desc1" value="">
+                  <mat-label class="label-editstocks">Description</mat-label>
+                  <input class="input-editstocks" matInput placeholder="Description" [(ngModel)] = "item_desc1" value="">
               </mat-form-field>
       
           </mat-list-item>
@@ -172,22 +178,22 @@
           <mat-list-item class="third-row" role="listitem">
       
               <mat-form-field class="date-expiry" appearance="outline">
-                  <mat-label>Date Expiry</mat-label>
-                  <input matInput placeholder="Date Expiry" [matDatepicker]="picker" [(ngModel)] = "date_expiry1">
+                  <mat-label class="label-editstocks">Date Expiry</mat-label>
+                  <input class="input-editstocks" matInput placeholder="Date Expiry" [matDatepicker]="picker" [(ngModel)] = "date_expiry1">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
       
               <mat-form-field class="price" appearance="outline">
-                  <mat-label>Price</mat-label>
-                  <input matInput type="number" class="example-right-align"  [(ngModel)] = "item_price1">
+                  <mat-label class="label-editstocks">Price</mat-label>
+                  <input class="input-editstocks" matInput type="number" class="example-right-align"  [(ngModel)] = "item_price1">
                   <span matPrefix>₱&nbsp;</span>
                   <span matSuffix>.00</span>
               </mat-form-field>
       
               <mat-form-field class="minimum" appearance="outline">
-                  <mat-label>Minimum</mat-label>
-                  <input matInput type="number" placeholder="Minimum"  [(ngModel)] = "item_minimum1">
+                  <mat-label class="label-editstocks">Minimum</mat-label>
+                  <input class="input-editstocks" matInput type="number" placeholder="Minimum"  [(ngModel)] = "item_minimum1">
               </mat-form-field>
       
           </mat-list-item>
@@ -195,8 +201,8 @@
           <mat-list-item class="fourth-row" role="listitem">
       
               <mat-form-field class="remarks" appearance="outline">
-                  <mat-label>Remarks</mat-label>
-                  <input matInput placeholder="Remarks"  [(ngModel)] = "remarks1">
+                  <mat-label class="label-editstocks">Remarks</mat-label>
+                  <input class="input-editstocks" matInput placeholder="Remarks"  [(ngModel)] = "remarks1">
               </mat-form-field>
       
           </mat-list-item>

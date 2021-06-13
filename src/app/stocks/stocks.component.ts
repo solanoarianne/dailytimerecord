@@ -112,6 +112,9 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   clickEvent: Subscription;
 
+
+  archiveCounter = 0;
+
   constructor(private et: EventTriggerService,public dialog: MatDialog, private ds: DataService) {
 
 
@@ -145,7 +148,10 @@ export class StocksComponent implements OnInit, AfterViewInit {
   }
 
   addArchive() {
-    this.dialog.open(ArchiveComponent);
+    this.dialog.open(ArchiveComponent, {
+      height: '800px',
+      width: '15000px',
+    });
   }
 
 
@@ -168,7 +174,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
       ngOnInit() {
 
-    
+        this.archiveCount();
         this.pullProducts();
 
 
@@ -215,6 +221,15 @@ pullArchive() {
     console.log(this.productInfoTable);
     this.productInfoTableDataSource.data = this.productInfoTable;
     console.log(this.productInfoTableDataSource);
+  })
+}
+
+
+archiveCount() {
+  this.ds.sendApiRequest("inventory_Archive", null).subscribe(data => {
+    this.productInfoTable = data.payload;
+    var count = Object.keys(data.payload).length;
+    this.archiveCounter = count;
   })
 }
 

@@ -1,3 +1,8 @@
+/* TO ALIGN MAT-ICON TO THE TEXT */
+.aligned-with-icon {
+  margin-top: -4px;
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -37,19 +42,61 @@ th {
   color: black;
 }
 
+/* TOP CONTENT BUTTONS */
+
+.btns {
+  position: relative;
+  margin-left: -24%;
+  margin-top: 2%;
+  margin-bottom: -3%;
+}
+
 .add-button {
-  margin-top: 50px;
-  margin-right: 50px;
-  margin-left: 100px;
+  margin-left: -50%;
   background-color: #37a641;
+  color: #fbfbfb;
+  float: left;
+  margin-right: 1%;
+}
+
+.add-button:hover {
+  background-color: #fbfbfb;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: #37a641;
+  border-width: 0.5px;
+  border-color: #37a641;
+}
+
+.view-archives {
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+
+  font-weight: bold;
+  background-color: #00796b;
   color: #fbfbfb;
 }
 
+.view-archives:hover {
+  background-color: #fbfbfb;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: #00796b;
+  border-width: 0.5px;
+  border-color: #00796b;
+}
 .search {
-  font-size: 15px;
+  width: 394px;
+  margin-top: -7%;
+  margin-left: 73.3%;
   font-family: "Poppins", sans-serif;
-  color: black;
-  width: 400px;
+  margin-bottom: -5%;
+}
+
+.searchField {
+  height: 25px;
+}
+.iLabel {
+  position: absolute;
+  margin-top: 7px;
 }
 
 .edit-button {
@@ -59,13 +106,6 @@ th {
 
 .delete-button {
   background-color: #e01818;
-}
-
-table {
-  margin-left: 100px;
-  margin-right: 80px;
-  margin-top: 15px;
-  width: 88%;
 }
 
 .admin-name {
@@ -132,9 +172,77 @@ table {
 
 /* TABLE STYLE */
 
+table {
+  margin-right: 80px;
+  margin-top: 30px;
+  width: 100%;
+  background-color: #fbfbfb;
+  height: 90%;
+}
+
 .tableSize {
   margin-left: 3%;
   margin-right: 3%;
+  height: 76%;
+}
+
+.td {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #282828;
+  text-align: center;
+}
+
+.th {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #282828;
+  text-align: center;
+  width: 170px;
+  height: 50px;
+}
+
+.actBtn {
+  width: 100px;
+  margin-left: 40px;
+}
+
+.edit-button {
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  padding: 1%;
+  background-color: #3e66db;
+  color: #ffffff;
+  width: 110px;
+}
+
+.edit-button:hover {
+  background-color: #fbfbfb;
+  color: #3e66db;
+}
+
+.editIcon {
+  font-size: 21px;
+  margin-right: -3%;
+  margin-left: -6%;
+}
+
+.archive-button {
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  padding: 1%;
+  background-color: #f34542;
+  color: #ffffff;
+  width: 110px;
+}
+
+.archive-button:hover {
+  background-color: #fbfbfb;
+  color: #f34542;
+}
+.archiveIcon {
+  font-size: 21px;
+  margin-left: -10%;
 }
 
 /* EDIT MODAL STYLES */
@@ -149,7 +257,8 @@ mat-divider {
 }
 
 .close-button {
-  margin-left: 490px;
+  margin-left: 390px;
+  font-size: 15px;
 }
 
 .first-row {
@@ -225,4 +334,29 @@ input.example-right-align::-webkit-inner-spin-button {
 
 input.example-right-align {
   -moz-appearance: textfield;
+}
+
+.input-editstocks {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+.label-editstocks {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: green !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: green !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: green !important;
 }
