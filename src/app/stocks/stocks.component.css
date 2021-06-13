@@ -45,10 +45,9 @@ th {
 /* TOP CONTENT BUTTONS */
 
 .btns {
-  position: relative;
+  position: absolute;
   margin-left: -24%;
   margin-top: 2%;
-  margin-bottom: -3%;
 }
 
 .add-button {
@@ -70,7 +69,9 @@ th {
 .view-archives {
   font-size: 15px;
   font-family: "Poppins", sans-serif;
-
+  float: left;
+  margin-top: -3.6%;
+  margin-left: 600px;
   font-weight: bold;
   background-color: #00796b;
   color: #fbfbfb;
@@ -85,7 +86,7 @@ th {
 }
 .search {
   width: 394px;
-  margin-top: -7%;
+  display: inline-block;
   margin-left: 73.3%;
   font-family: "Poppins", sans-serif;
   margin-bottom: -5%;
@@ -177,13 +178,11 @@ table {
   margin-top: 30px;
   width: 100%;
   background-color: #fbfbfb;
-  height: 90%;
 }
 
 .tableSize {
   margin-left: 3%;
   margin-right: 3%;
-  height: 76%;
 }
 
 .td {
@@ -191,6 +190,7 @@ table {
   font-size: 14px;
   color: #282828;
   text-align: center;
+  padding: 2%;
 }
 
 .th {
@@ -199,7 +199,6 @@ table {
   color: #282828;
   text-align: center;
   width: 170px;
-  height: 50px;
 }
 
 .actBtn {
@@ -210,7 +209,7 @@ table {
 .edit-button {
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  padding: 1%;
+  margin-bottom: 5px;
   background-color: #3e66db;
   color: #ffffff;
   width: 110px;
@@ -228,9 +227,10 @@ table {
 }
 
 .archive-button {
+  display: inline;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  padding: 1%;
+
   background-color: #f34542;
   color: #ffffff;
   width: 110px;

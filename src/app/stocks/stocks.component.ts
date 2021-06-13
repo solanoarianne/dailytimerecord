@@ -120,6 +120,8 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
     this.clickEvent = this.et.getClickEvent().subscribe(()=> {
       this.pullProducts();
+
+      this.archiveCount();
     })
 
 
@@ -243,6 +245,7 @@ async arcProduct(e) {
   console.log(this.prodInfo);
   await this.ds.sendApiRequest("arcProduct", this.prodInfo).subscribe(res => {
     this.pullProducts();
+    this.archiveCount();
 });
 }
 //RECOVER Item

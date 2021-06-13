@@ -44,6 +44,7 @@
                 <div class="btns">
                   <button class="add-button" (click)="addStocks()" mat-flat-button><mat-icon class="aligned-with-icon">add_circle_outline</mat-icon> Add Stocks</button>
                   <button class="view-archives" (click)="addArchive()" matBadge="{{archiveCounter}}"  matBadgeColor="warn"   mat-flat-button><mat-icon class="aligned-with-icon">folder_open</mat-icon><span class="aligned-with-icon"> Archives </span></button>
+                  
                 </div>
                 <mat-form-field class="search"autocomplete="off">
                   
@@ -55,6 +56,8 @@
                 <!-- TABLE SECTION -->
                
                 <div class="mat-elevation-z8 tableSize">
+                  
+            
                     <table mat-table [dataSource]="productInfoTableDataSource"  matSort>
                   
                       <!-- ID Column -->
@@ -116,7 +119,7 @@
                         <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action </th>
                         <td mat-cell  *matCellDef="let element">
                           <div class="actBtn">
-                            <button mat-raised-button class="edit-button" color="success" (click)= "editModal(element)"><mat-icon class="editIcon">edit</mat-icon> Edit </button> <br> <br>
+                            <button mat-raised-button class="edit-button" color="success" (click)= "editModal(element)"><mat-icon class="editIcon">edit</mat-icon>Edit</button> 
                             <button mat-raised-button class="archive-button"  (click)="arcProduct(element.item_id);"><mat-icon class="archiveIcon">archive</mat-icon>Archive</button>
                           </div>
                           </td>
@@ -126,7 +129,7 @@
                       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                   
-                    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[7, 14, 20]" showFirstLastButtons></mat-paginator>
                   </div>
 
                   <!-- END OF TABLE CONTENT -->
