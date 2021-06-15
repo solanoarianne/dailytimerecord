@@ -3,7 +3,9 @@ import { DataService } from 'src/app/services/data.service';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
-import {FormControl, FormBuilder, FormGroup} from '@angular/forms';
+import {FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+
+
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -15,6 +17,11 @@ import {default as _rollupMoment, Moment} from 'moment';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Key } from 'protractor';
+
+import { CdkTableExporterModule } from 'cdk-table-exporter';
+import { stringify } from '@angular/compiler/src/util';
+import { MatTableExporterDirective } from 'mat-table-exporter';
 
 const moment = _rollupMoment || _moment;
 
@@ -30,6 +37,19 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
+
+
+
+export enum ExportType {
+  XLS = 'xls',
+  XLSX = 'xlsx',
+  CSV = 'csv',
+  TXT = 'txt',
+  JSON = 'json',
+  OTHER = 'other'
+}
+
 
 
 
@@ -63,13 +83,15 @@ export interface StocksTable {
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
-export class ItemHistoryComponent implements OnInit, AfterViewInit {
+export class ItemHistoryComponent extends CdkTableExporterModule implements OnInit, AfterViewInit  {
 
+  title = 'export-table-data-to-any-format';
 
 
   @ViewChild(MatSort) sort: MatSort;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  
   productInfoTable: StocksTable []  = [];
   productInfoTableDataSource = new MatTableDataSource(this.productInfoTable);
   displayedColumns: string[] = [
@@ -82,11 +104,31 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
     "Column6",
     "Column7",
     "Column8",
+    "Column9",
+    "Column10",
  
   
   ];
 
 
+  @ViewChild(MatTableExporterDirective, { static: true }) exporter: MatTableExporterDirective;
+
+exportIt() {
+  console.log(this.monthYear);
+ 
+
+  this.exporter.exportTable(ExportType.CSV, {
+    
+
+    fileName: this.monthYear,
+    Props: {
+      Author: "Cocolime Management"
+    }
+  });
+}
+
+
+  monthYear: any;
 
 
   inputDisable = true;
@@ -104,12 +146,16 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
 
   selectedMYBool = false;
 
+  generatePDF: any =[];
   
 
 
   filterBy: string[] = ['All', 'Specific Month And Year'];
 
-  constructor(private ds: DataService) { }
+
+  constructor(private ds: DataService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.datePicker.controls['date1'].disable();
@@ -118,17 +164,18 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
   }
 
 
+
   ngAfterViewInit() {
     this.productInfoTableDataSource.paginator = this.paginator;
-    this.productInfoTableDataSource.sort = this.sort;
+
   }
 
 
 
 
   datePicker = new FormGroup({
-    date1: new FormControl(),
-    date2: new FormControl()
+    date1: new FormControl('', { validators: [Validators.required] }),
+    date2: new FormControl('', { validators: [Validators.required] })
  });
 
 
@@ -147,58 +194,57 @@ export class ItemHistoryComponent implements OnInit, AfterViewInit {
     
   }
 
+
   chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    
     this.selectedFilter.selectedMonth= normalizedMonth.month() + 1;
     const ctrlValue = this.date.value;
     ctrlValue.month(normalizedMonth.month());
-    
     this.date.setValue(ctrlValue);
     datepicker.close();
 
   }
 
+ 
 
-// MAIN FUNCTION
-  monthSelected(){
+
+  // MAIN FUNCTION
+    monthSelected(){
 
     var count = Object.keys(this.selectedFilter).length;
-    console.log(count);
-
- 
-     
-
-
-  if(this.selectedMonth === "All"){
-    this.datePicker.controls['date1'].disable();
-    this.inputDisable = true;
-    console.log(this.selectedMonth);
-    this.ds.sendApiRequest("inventory", null).subscribe(data => {
-      this.selected = data.data;
-      this.productInfoTable = data.payload;
-      this.productInfoTableDataSource = data.payload;
-      
+    var  months1 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     
- });
-
-   
-  }
-
-  else if (this.selectedMonth === "Specific Month And Year"){
-    this.datePicker.controls['date1'].disable();
     this.inputDisable = false;
-    if(count == 2){
-      console.log("you can send spi request now");
-      this.ds.sendApiRequest("selectMY", this.selectedFilter).subscribe(data => {
+
+    if(count < 2){
+     
+        this.monthYear = "All inventory stocks";
+
+        this.ds.sendApiRequest("inventory", null).subscribe(data => {
+        this.selected = data.data;
         this.productInfoTable = data.payload;
-      this.productInfoTableDataSource = data.payload;
-       
-   });
-    }   
-  }
-
+        this.productInfoTableDataSource.data = this.productInfoTable;      
+    });
     }
+      else if(count == 2){
+        this.monthYear =  months1[this.selectedFilter.selectedMonth - 1 ] + "-" + JSON.stringify(this.selectedFilter.selectedYear) + "-Stocks";
+        this.ds.sendApiRequest("selectMY", this.selectedFilter).subscribe(data => {
+        this.productInfoTable = data.payload;
+        this.productInfoTableDataSource.data = this.productInfoTable;   
+      });
+    }   
 
-  
+
+
   }
 
+
+  clearDate(){
+    this.datePicker.value['date1'] = null;
+    this.datePicker.reset();
+    this.selectedFilter={};
+    this.monthSelected();
+  }
+
+
+}
+        

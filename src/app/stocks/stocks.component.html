@@ -65,6 +65,17 @@
                         <th mat-header-cell class="th" *matHeaderCellDef  hidden> ID </th>
                         <td mat-cell class="td" *matCellDef="let element" hidden> {{element.item_id}} </td>
                       </ng-container>
+
+                      <!-- ID Column -->
+                      <ng-container matColumnDef="statusCol" >
+                        <th mat-header-cell class="th" *matHeaderCellDef  > Status </th>
+                        <ng-container *matCellDef="let status">
+                        <td mat-cell class="td" *ngIf="(status.item_quant > status.item_minimum) "  > On stock </td>
+                        <td mat-cell class="td"  style="white-space:nowrap;" *ngIf="(status.item_quant == status.item_minimum) "> Minimum stock </td>
+                        <td mat-cell class="td"  style="white-space:nowrap;" *ngIf="(status.item_quant > 0 && status.item_quant < status.item_minimum) "> Low stock </td>
+                        <td mat-cell class="td"  style="white-space:nowrap;" *ngIf="(status.item_quant == 0) "> No stock </td>
+                      </ng-container>
+                      </ng-container>
                   
                       <!-- ITEM_Name Column -->
                       <ng-container matColumnDef="Column2">

@@ -67,6 +67,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
   productInfoTableDataSource = new MatTableDataSource(this.productInfoTable);
   displayedColumns: string[] = [
 
+    "statusCol",
     "Column1",
     "Column2",
     "Column3",
@@ -169,7 +170,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
       ngAfterViewInit() {
         this.productInfoTableDataSource.paginator = this.paginator;
-        this.productInfoTableDataSource.sort = this.sort;
+
 
        
       }

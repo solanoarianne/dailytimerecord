@@ -17,11 +17,11 @@
             <mat-sidenav class="sidenav" #drawer mode="side" opened="true">
                 <img src="../assets/logo.png" class="inventory-logo">
 
-                <button mat-button class="sidebarcontent" routerLink="/main"><mat-icon class="dashboard">dashboard</mat-icon> Dashboard</button>
-                <button mat-button class="sidebarcontent" routerLink="/orders"><mat-icon class="orders">shopping_cart</mat-icon> Orders</button>
+
+
                 <button mat-button class="sidebarcontent" routerLink="/stocks"><mat-icon class="stocks">inventory_2</mat-icon> Stocks</button>
-                <button mat-button class="sidebarcontent" routerLink="/supply"><mat-icon class="supply">local_shipping</mat-icon> Supply</button>
-                <button mat-button class="sidebarcontent" routerLink="/itemHistory">	<mat-icon>history</mat-icon> Item history</button>
+
+                <button mat-button class="sidebarcontent" routerLink="/itemHistory">	<mat-icon class="itemHistory">print</mat-icon>Generate Report</button>
             </mat-sidenav>
             <mat-sidenav-content>
                 <div>
@@ -47,32 +47,22 @@
                 
         <div class="topContent">
 
-            <div style="display: flex; flex-direction: column;">
-     
-                <label id="radioLabel">Filter By</label> 
-                <mat-radio-group
-                aria-labelledby="radioLabel"
-                class="radioBtn"
-                [(ngModel)]="selectedMonth" (ngModelChange)="monthSelected();">
-            
-                <mat-radio-button class="example-radio-button" *ngFor="let filterBy of filterBy" [value]="filterBy" [checked] = "filterBy == 'All'">
-                {{filterBy}}
-                </mat-radio-button>
-                </mat-radio-group>
-            </div>
             <div [formGroup] = "datePicker">
+            <label style="font-family: Poppins; font-size: 15px; font-weight: bold;">Select</label><br>
             <mat-form-field appearance="outline" >
                 <mat-label>Month and Year</mat-label>
                 <input id="selectedMy" formControlName= "date1" matInput [matDatepicker]="dp" [formControl]="date" (ngModelChange) ="monthSelected();">
                 <mat-datepicker-toggle  matSuffix [for]="dp"></mat-datepicker-toggle>
                 <mat-datepicker disabled = "{{inputDisable}}" #dp 
-                
                                 startView="multi-year"
                                 (yearSelected)="chosenYearHandler($event)"
                                 (monthSelected)="chosenMonthHandler($event, dp)"
                                 panelClass="example-month-picker">
                 </mat-datepicker>
               </mat-form-field>
+                  
+      <button mat-button (click)="exportIt()">EXPORT {{monthYear}} csv</button>
+      <button mat-button (click)="clearDate()">Clear</button>
             </div>      
         </div>
     </div>
@@ -80,73 +70,79 @@
      <!-- TABLE SECTION -->
 
      <div class="mat-elevation-z8 tableSize">
-        <table mat-table [dataSource]="productInfoTableDataSource"  matSort>
+        <table id="tableID" mat-table  matTableExporter [dataSource]="productInfoTableDataSource"  matSort  #exporter="matTableExporter">
       
           <!-- ID Column -->
           <ng-container matColumnDef="Column1">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.item_id}} </td>
+            <th mat-header-cell *matHeaderCellDef hidden> ID </th>
+            <td mat-cell *matCellDef="let element" hidden> {{element.item_id }} </td>
+          </ng-container>
+
+           <!-- Date Added Column -->
+           <ng-container matColumnDef="Column2">
+            <th mat-header-cell *matHeaderCellDef class="th"> Date Added </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.date_acquired  |  date: 'MMM d, y'}} </td>
           </ng-container>
       
           <!-- ITEM_Name Column -->
-          <ng-container matColumnDef="Column2">
-            <th mat-header-cell *matHeaderCellDef> Product Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.item_name}} </td>
+          <ng-container matColumnDef="Column3">
+            <th mat-header-cell *matHeaderCellDef class="th"> Product Name </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.item_name}} </td>
           </ng-container>
       
           <!-- Item_desc Column -->
-          <ng-container matColumnDef="Column3">
-            <th mat-header-cell *matHeaderCellDef> Description </th>
-            <td mat-cell *matCellDef="let element"> {{element.item_desc}} </td>
+          <ng-container matColumnDef="Column4">
+            <th mat-header-cell *matHeaderCellDef class="th"> Description </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.item_desc}} </td>
           </ng-container>
       
           <!-- item_quant Column -->
-          <ng-container matColumnDef="Column4">
-            <th mat-header-cell *matHeaderCellDef> Quantity </th>
-            <td mat-cell *matCellDef="let element"> {{element.item_quant}} </td>
+          <ng-container matColumnDef="Column5">
+            <th mat-header-cell *matHeaderCellDef class="th"> Quantity </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.item_quant}} </td>
           </ng-container>
 
           <!-- item_minimum Column -->
-          <ng-container matColumnDef="Column5">
-            <th mat-header-cell *matHeaderCellDef> Minimum </th>
-            <td mat-cell *matCellDef="let element"> {{element.item_minimum}} </td>
+          <ng-container matColumnDef="Column6">
+            <th mat-header-cell *matHeaderCellDef class="th"> Minimum </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.item_minimum}} </td>
           </ng-container>
 
            <!-- item_price Column -->
-           <ng-container matColumnDef="Column6">
-            <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let element"> {{element.item_price}} </td>
+           <ng-container matColumnDef="Column7">
+            <th mat-header-cell *matHeaderCellDef class="th"> Price </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.item_price}} </td>
           </ng-container>
         
           <!-- date_expiry Column -->
-          <ng-container matColumnDef="Column7">
-            <th mat-header-cell *matHeaderCellDef> DateExpiry </th>
-            <td mat-cell *matCellDef="let element"> {{element.date_expiry  |  date: 'MMM d, y'}}</td>
+          <ng-container matColumnDef="Column8">
+            <th mat-header-cell *matHeaderCellDef class="th"> DateExpiry </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.date_expiry  |  date: 'MMM d, y'}}</td>
           </ng-container>
 
            <!-- remarks Column -->
-           <ng-container matColumnDef="Column8">
-            <th mat-header-cell *matHeaderCellDef> Remarks </th>
-            <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+           <ng-container matColumnDef="Column9">
+            <th mat-header-cell *matHeaderCellDef class="th"> Remarks </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.remarks}} </td>
           </ng-container>
 
           <!-- modifiedBy Column -->
-          <ng-container matColumnDef="Column9">
-            <th mat-header-cell *matHeaderCellDef> modifiedBy </th>
-            <td mat-cell *matCellDef="let element" style="text-align: center;">{{element.modifiedBy}} <br> {{element.dateModified  |  date: 'MMM d, y' }} </td>
+          <ng-container matColumnDef="Column10">
+            <th mat-header-cell *matHeaderCellDef class="th"> Added By </th>
+            <td mat-cell *matCellDef="let element" class="td" style="text-align: center;">{{element.modifiedBy}} <br> {{element.dateModified  |  date: 'MMM d, y' }} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
         </table>
       
-        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[7, 14, 20]" showFirstLastButtons></mat-paginator>
       </div>
 
       <!-- END OF TABLE CONTENT -->
 
-  
-
+ 
             </mat-sidenav-content>
         </mat-sidenav-container>
 

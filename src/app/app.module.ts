@@ -38,7 +38,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 // Material Buttons & Indicators
 import { MatButtonModule } from '@angular/material/button';
@@ -66,6 +66,8 @@ import { ArchiveComponent } from './archive/archive.component';
 import { EditStockComponent } from './modals/edit-stock/edit-stock.component';
 import { EditServiceService } from './services/editService/edit-service.service';
 import { ItemHistoryComponent } from './components/item-history/item-history.component';
+import { CdkTableExporterModule, MatTableExporterModule } from 'mat-table-exporter';
+
 
 // HTTP
 
@@ -134,6 +136,9 @@ import { ItemHistoryComponent } from './components/item-history/item-history.com
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    // Mat-Table Exporter
+    MatTableExporterModule,
+    CdkTableExporterModule,
        // HTTP
        HttpClientModule
   ],

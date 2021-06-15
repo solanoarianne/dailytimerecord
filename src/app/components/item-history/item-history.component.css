@@ -42,6 +42,11 @@ mat-sidenav {
   margin-right: 10px;
 }
 
+.itemHistory {
+  margin-left: -13%;
+  margin-right: 10px;
+}
+
 .supply {
   margin-left: -100px;
   margin-right: 10px;
@@ -102,19 +107,16 @@ mat-sidenav {
 
 /* RADIO BUTTONS STYLES */
 
-.gridSize {
-  margin-bottom: 5%;
-}
-
 .topContent {
-  width: 70%;
-  height: 100px !important;
+  width: 94%;
+  height: fit-content !important;
   margin: auto;
-  margin-top: 30px;
+  margin-top: 1%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
   justify-content: space-between;
+  margin-bottom: -2%;
 }
 
 mat-radio-button {
@@ -160,12 +162,29 @@ mat-radio-button {
 
 /* TABLE STYLES GOES HERE */
 table {
+  margin-right: 80px;
+  margin-top: 30px;
   width: 100%;
-  font-family: Poppins;
+  background-color: #fbfbfb;
 }
 
 .tableSize {
-  width: 80%;
-  margin-top: 5%;
-  margin: auto;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+.td {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #282828;
+  text-align: center;
+  padding: 1.8%;
+}
+
+.th {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #282828;
+  text-align: center;
+  width: 170px;
 }
