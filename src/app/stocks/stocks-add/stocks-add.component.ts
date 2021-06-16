@@ -17,6 +17,14 @@ export interface StocksTable {
   item_minimum: number;
   remarks: string;
 }
+
+
+interface measurementType {
+  value: string;
+  viewValue: string;
+}
+
+
 @Component({
   selector: 'app-stocks-add',
   templateUrl: './stocks-add.component.html',
@@ -45,6 +53,16 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
   ];
 
   
+  mt: measurementType[] = [
+    {value: 'L', viewValue: 'Liters (L)'},
+    {value: 'ml', viewValue: 'mililiters (ml)'},
+    {value: 'dL', viewValue: 'deciliters (dl)'},
+    {value: 'g', viewValue: 'grams (g)'},
+    {value: 'mg', viewValue: 'miligrams (mg)'},
+    {value: 'kg', viewValue: 'kilogram (kg)'},
+    
+    
+  ];
  
   modifiedBy: any;
   modifiedBy1: any;
@@ -59,6 +77,7 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
   date_expiry: any;
   item_price: any;
   item_minimum: any;
+  measurementType: any;
   remarks: any;
   username: string
   username1: string
@@ -98,13 +117,13 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
 async addProduct(){
   this.prodInfo.item_name = this.item_name;
   this.prodInfo.item_desc = this.item_desc;
-  this.prodInfo.item_quant = this.item_quant;
+  this.prodInfo.item_quant = parseInt(this.item_quant);
   this.prodInfo.date_expiry = this.date_expiry;
   this.prodInfo.item_price = this.item_price;
-  this.prodInfo.item_minimum = this.item_minimum;
+  (this.prodInfo.item_minimum) = parseInt(this.item_minimum);
   this.prodInfo.remarks = this.remarks;
   this.prodInfo.modifiedBy = this.modifiedBy;
-
+  this.prodInfo.measurementType = this.measurementType;
   console.log(this.prodInfo);
   
   await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {

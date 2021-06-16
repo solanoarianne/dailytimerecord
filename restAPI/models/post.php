@@ -55,8 +55,8 @@
 		function addProduct($dt) {
             $payload = $dt;
 
-            $this->sql = "INSERT INTO inventory_tb (item_name, item_desc, item_quant, date_expiry, item_price, item_minimum, remarks, modifiedBy, dateModified, date_acquired) VALUES 
-            ('$dt->item_name', '$dt->item_desc', '$dt->item_quant', '$dt->date_expiry', '$dt->item_price', '$dt->item_minimum', '$dt->remarks', '$dt->modifiedBy', CURRENT_DATE(), CURRENT_DATE())"; 
+            $this->sql = "INSERT INTO inventory_tb (item_name, item_desc, item_quant, date_expiry, item_price, item_minimum, remarks, modifiedBy, dateModified, date_acquired, measurementType) VALUES 
+            ('$dt->item_name', '$dt->item_desc', '$dt->item_quant', '$dt->date_expiry', '$dt->item_price', '$dt->item_minimum', '$dt->remarks', '$dt->modifiedBy', CURRENT_DATE(), CURRENT_DATE(), '$dt->measurementType')"; 
             
             $this->conn->query($this->sql);
 
@@ -136,7 +136,7 @@
 
             $payload = $dt;
 
-            $this->sql = " UPDATE inventory_tb SET item_name='$dt->item_name', item_desc='$dt->item_desc', item_quant='$dt->item_quant', date_expiry='$dt->date_expiry', item_price='$dt->item_price', item_minimum='$dt->item_minimum', remarks='$dt->remarks', modifiedBy='$dt->modifiedBy', dateModified = CURRENT_DATE() WHERE item_id='$dt->item_id'";
+            $this->sql = " UPDATE inventory_tb SET item_name='$dt->item_name', item_desc='$dt->item_desc', item_quant='$dt->item_quant', date_expiry='$dt->date_expiry', item_price='$dt->item_price', item_minimum='$dt->item_minimum', remarks='$dt->remarks', modifiedBy='$dt->modifiedBy', dateModified = CURRENT_DATE(), measurementType='$dt->measurementType' WHERE item_id='$dt->item_id'";
             $this->conn->query($this->sql);
             return $this->select('inventory_tb', null);
         }

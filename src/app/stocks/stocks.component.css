@@ -333,28 +333,37 @@ mat-divider {
 
 .quantity {
   width: 215px;
+  margin-right: 3.5%;
 }
 
 .description {
-  width: 500px;
+  width: 100%;
 }
 
 .date-expiry {
-  width: 170px;
+  width: 40%;
   margin-right: 25px;
 }
 
 .price {
-  width: 170px;
+  width: 30%;
   margin-right: 25px;
 }
 
 .minimum {
-  width: 110px;
+  width: 30%;
 }
 
 .remarks {
-  width: 500px;
+  width: 100%;
+}
+
+.add-stocks {
+  float: right;
+  margin-right: 2%;
+  margin-bottom: 10px;
+  font-size: 15px;
+  background-color: #37a641;
 }
 
 .add-button {
@@ -362,6 +371,10 @@ mat-divider {
   margin-bottom: 10px;
   font-size: 15px;
   background-color: #37a641;
+}
+
+.measurement {
+  width: 50%;
 }
 
 .example-container .mat-form-field + .mat-form-field {

@@ -112,8 +112,8 @@ mat-sidenav {
   height: fit-content !important;
   margin: auto;
   margin-top: 1%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+
   align-items: center;
   justify-content: space-between;
   margin-bottom: -2%;
@@ -187,4 +187,8 @@ table {
   color: #282828;
   text-align: center;
   width: 170px;
+}
+
+.exportBtn {
+  float: right;
 }

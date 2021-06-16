@@ -60,9 +60,11 @@
                                 panelClass="example-month-picker">
                 </mat-datepicker>
               </mat-form-field>
-                  
-      <button mat-button (click)="exportIt()">EXPORT {{monthYear}} csv</button>
-      <button mat-button (click)="clearDate()">Clear</button>
+      <button mat-button (click)="clearDate()" class="clearBtn">Clear</button> 
+      
+ 
+      <button mat-button (click)="exportIt()" class="exportBtn">EXPORT {{monthYear}} csv</button>
+   
             </div>      
         </div>
     </div>

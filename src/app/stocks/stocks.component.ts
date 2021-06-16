@@ -28,6 +28,11 @@ export interface StocksTable {
   
 }
 
+interface measurementType {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
@@ -36,6 +41,19 @@ export interface StocksTable {
 export class StocksComponent implements OnInit, AfterViewInit {
 
   
+  mt: measurementType[] = [
+    {value: 'L', viewValue: 'Liters (L)'},
+    {value: 'ml', viewValue: 'mililiters (ml)'},
+    {value: 'dL', viewValue: 'deciliters (dl)'},
+    {value: 'g', viewValue: 'grams (g)'},
+    {value: 'mg', viewValue: 'miligrams (mg)'},
+    {value: 'kg', viewValue: 'kilogram (kg)'},
+    
+    
+  ];
+
+
+
   @ViewChild('EditDialog', { static: true }) EditDialog: TemplateRef<any>;
 
   editModal = (i) => {
@@ -43,11 +61,12 @@ export class StocksComponent implements OnInit, AfterViewInit {
     this.item_name1 = i.item_name;
     this.item_id1 = i.item_id;
     this.item_desc1 = i.item_desc;
-    this.item_quant1 =parseInt( i.item_quant);
+    this.item_quant1 =i.item_quant;
     this.item_price1 = i.item_price;
-    this.item_minimum1 = parseInt(i.item_minimum);
+    this.item_minimum1 = i.item_minimum;
     this.remarks1 = i.remarks;
     this.date_expiry1 = i.date_expiry;
+    this.measurementType1 = i.measurementType;
 
 
    
@@ -65,7 +84,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   productInfoTable: StocksTable[]  = [];
   productInfoTableDataSource = new MatTableDataSource(this.productInfoTable);
-  displayedColumns: string[] = [
+  displayedColumns: any[] = [
 
     "statusCol",
     "Column1",
@@ -94,22 +113,23 @@ export class StocksComponent implements OnInit, AfterViewInit {
   item_id: any;
   item_name: any;
   item_desc: any;
-  item_quant: any;
+  item_quant: number;
   date_expiry: any;
   item_price: any;
-  item_minimum: any;
+  item_minimum: number;
   remarks: any;
   username: string
   username1: string
-
+  measurementType: any;
   item_id1: any;
   item_name1: any;
   item_desc1: any;
-  item_quant1: any;
+  item_quant1: number;
   date_expiry1: any;
   item_price1: any;
-  item_minimum1: any;
+  item_minimum1: number;
   remarks1: any;
+  measurementType1: any;
 
   clickEvent: Subscription;
 
@@ -213,9 +233,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 pullProducts() {
   this.ds.sendApiRequest("inventory", null).subscribe(data => {
     this.productInfoTable = data.payload;
-    console.log(this.productInfoTable);
     this.productInfoTableDataSource.data = this.productInfoTable;
-    console.log(this.productInfoTableDataSource);
   })
 }
 pullArchive() {
@@ -281,14 +299,14 @@ editProduct(e){
   this.prodInfo.item_name = this.item_name1;
   this.prodInfo.item_id = this.item_id1;
   this.prodInfo.item_desc = this.item_desc1;
-  this.prodInfo.item_quant = parseInt(this.item_quant1);
-  this.prodInfo.item_minimum = parseInt(this.item_minimum1);
+  this.prodInfo.item_quant =this.item_quant1;
+  this.prodInfo.item_minimum = this.item_minimum1;
   this.prodInfo.item_price = this.item_price1;
   this.prodInfo.remarks = this.remarks1;
   this.prodInfo.date_expiry = this.date_expiry1;
 
   this.prodInfo.modifiedBy = this.modifiedBy;
-
+  this.prodInfo.measurementType = this.measurementType1;
 
   console.log(this.prodInfo);
 

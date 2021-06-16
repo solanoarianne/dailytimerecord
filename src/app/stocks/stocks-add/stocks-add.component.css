@@ -3,7 +3,7 @@ mat-form-field {
 }
 
 mat-divider {
-  width: 500px;
+  width: 100%;
   margin-left: 15px;
 }
 
@@ -16,7 +16,7 @@ h2 {
 }
 
 .close-button {
-  margin-left: 340px;
+  margin-left: 570px;
 }
 
 .first-row {
@@ -46,35 +46,41 @@ h2 {
 
 .quantity {
   width: 215px;
+  margin-right: 3.5%;
 }
 
 .description {
-  width: 500px;
+  width: 100%;
 }
 
 .date-expiry {
-  width: 170px;
+  width: 40%;
   margin-right: 25px;
 }
 
 .price {
-  width: 170px;
+  width: 30%;
   margin-right: 25px;
 }
 
 .minimum {
-  width: 110px;
+  width: 30%;
 }
 
 .remarks {
-  width: 500px;
+  width: 100%;
 }
 
 .add-button {
-  margin-left: 453px;
+  float: right;
+  margin-right: 2%;
   margin-bottom: 10px;
   font-size: 15px;
   background-color: #37a641;
+}
+
+.measurement {
+  width: 50%;
 }
 
 .example-container .mat-form-field + .mat-form-field {

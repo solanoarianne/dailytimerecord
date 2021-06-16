@@ -69,11 +69,17 @@
                       <ng-container matColumnDef="statusCol" >
                         <th mat-header-cell class="th" *matHeaderCellDef  > <span style="margin-right: 20% !important;">Status</span> </th>
                         <ng-container *matCellDef="let status">
-                        <td mat-cell class="td1" *ngIf="(status.item_quant > status.item_minimum) "  style="border-right: 2px solid #00AC23;"><p class="onStock">  On stock  </p></td>
-                        <td mat-cell class="td1"  style="white-space:nowrap;" style=" border-right: 2px solid #FFD334;" *ngIf="(status.item_quant == status.item_minimum) "><p class="minStock"> Minimum stock</p> </td>
-                        <td mat-cell class="td1"  style="white-space:nowrap;" style=" border-right: 2px solid #F08031;"*ngIf="(  status.item_quant > 0  && status.item_quant < status.item_minimum )"> <p class="lowStock">Low stock</p></td>
-                        <td mat-cell class="td1"  style="white-space:nowrap;" *ngIf="(status.item_quant == 0) " style=" border-right: 2px solid #E32F2F;"> <p class="noStock">No Stock</p> </td>
-                      </ng-container>
+                        <td mat-cell class="td1" *ngIf="status.item_quant > status.item_minimum || status.item_quant > 99 && status.item_quant != status.item_minimum; else min"  style="border-right: 2px solid #00AC23;"><p class="onStock">  On stock  </p></td>
+                        <ng-template #min>
+                          <td mat-cell class="td1"  style="white-space:nowrap;" style=" border-right: 2px solid #FFD334;" *ngIf="(status.item_quant == status.item_minimum); else low"><p class="minStock"> Minimum stock</p> </td>
+                        </ng-template>
+                        <ng-template #low>
+                          <td mat-cell class="td1"  style="white-space:nowrap;" style=" border-right: 2px solid #F08031;"*ngIf="status.item_quant != 0  && status.item_quant < status.item_minimum; else noS"> <p class="lowStock">Low stock</p></td>
+                        </ng-template>
+                        <ng-template #noS>
+                          <td mat-cell class="td1"  style="white-space:nowrap;" *ngIf="(status.item_quant == 0) " style=" border-right: 2px solid #E32F2F;"> <p class="noStock">No Stock</p> </td>
+                        </ng-template>
+                        </ng-container>
                       </ng-container>
                   
                       <!-- ITEM_Name Column -->
@@ -91,7 +97,7 @@
                       <!-- item_quant Column -->
                       <ng-container matColumnDef="Column4">
                         <th mat-header-cell class="th" *matHeaderCellDef > Quantity </th>
-                        <td mat-cell class="td"  *matCellDef="let element"> {{element.item_quant | number}} </td>
+                        <td mat-cell class="td"  *matCellDef="let element"> {{element.item_quant | number}} {{element.measurementType}} </td>
                       </ng-container>
 
                       <!-- item_minimum Column -->
@@ -176,6 +182,15 @@
                   <mat-label>Quantity</mat-label>
                   <input matInput class="input-editstocks" type="number" placeholder="Quantity" [(ngModel)] = "item_quant1">
               </mat-form-field>
+
+              <mat-form-field appearance="outline" class="measurement">
+                <mat-label>Measurement</mat-label>
+                <mat-select [(ngModel)]="measurementType1" name="mt">
+                  <mat-option *ngFor="let mt of mt" [value]="mt.value">
+                    {{mt.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
       
           </mat-list-item>
       
@@ -224,7 +239,7 @@
       </mat-list>
       </mat-dialog-content>
       <mat-dialog-actions align="end">
-        <button class="add-button" (click)="editProduct($event);" mat-flat-button color="warn">Add</button>
+        <button class="add-stocks" (click)="editProduct($event);" mat-flat-button color="warn">Add</button>
       </mat-dialog-actions>
     </ng-template>
 

@@ -20,7 +20,17 @@
         <mat-form-field class="quantity" appearance="outline">
             <mat-label class="label-addstocks">Quantity</mat-label>
             <input matInput class="input-addstocks" type="number" placeholder="Quantity" [(ngModel)] = "item_quant">
+            
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="measurement">
+            <mat-label>Measurement</mat-label>
+            <mat-select [(ngModel)]="measurementType" name="mt">
+              <mat-option *ngFor="let mt of mt" [value]="mt.value">
+                {{mt.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
     </mat-list-item>
 
