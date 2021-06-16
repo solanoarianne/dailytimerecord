@@ -43,9 +43,9 @@ export class StocksComponent implements OnInit, AfterViewInit {
     this.item_name1 = i.item_name;
     this.item_id1 = i.item_id;
     this.item_desc1 = i.item_desc;
-    this.item_quant1 = i.item_quant;
+    this.item_quant1 =parseInt( i.item_quant);
     this.item_price1 = i.item_price;
-    this.item_minimum1 = i.item_minimum;
+    this.item_minimum1 = parseInt(i.item_minimum);
     this.remarks1 = i.remarks;
     this.date_expiry1 = i.date_expiry;
 
@@ -281,8 +281,8 @@ editProduct(e){
   this.prodInfo.item_name = this.item_name1;
   this.prodInfo.item_id = this.item_id1;
   this.prodInfo.item_desc = this.item_desc1;
-  this.prodInfo.item_quant = this.item_quant1;
-  this.prodInfo.item_minimum = this.item_minimum1;
+  this.prodInfo.item_quant = parseInt(this.item_quant1);
+  this.prodInfo.item_minimum = parseInt(this.item_minimum1);
   this.prodInfo.item_price = this.item_price1;
   this.prodInfo.remarks = this.remarks1;
   this.prodInfo.date_expiry = this.date_expiry1;

@@ -16,9 +16,8 @@
                 <img src="../assets/logo.png" class="inventory-logo">
 
                 <button mat-button class="sidebarcontent" routerLink="/main" routerLinkActive="selected"><mat-icon class="dashboard">dashboard</mat-icon> Dashboard</button>
-                <button mat-button class="sidebarcontent" routerLink="/orders" routerLinkActive="selected"><mat-icon class="orders">shopping_cart</mat-icon> Orders</button>
-                <button mat-button class="sidebarcontent" routerLink="/stocks" routerLinkActive="selected"><mat-icon class="stocks">inventory_2</mat-icon> Stocks</button>
-                <button mat-button class="sidebarcontent" routerLink="/supply" routerLinkActive="selected"><mat-icon class="supply">local_shipping</mat-icon> Supply</button>
+                <button mat-button class="sidebarcontent" routerLink="/stocks" routerLinkActive="selected"><mat-icon class="stocks">inventory_2</mat-icon> Stocks</button>  
+                <button mat-button class="sidebarcontent" routerLink="/itemHistory">	<mat-icon class="itemHistory">print</mat-icon>Generate Report</button>
             </mat-sidenav>
             <mat-sidenav-content>
                 <div>
@@ -68,12 +67,12 @@
 
                       <!-- ID Column -->
                       <ng-container matColumnDef="statusCol" >
-                        <th mat-header-cell class="th" *matHeaderCellDef  > Status </th>
+                        <th mat-header-cell class="th" *matHeaderCellDef  > <span style="margin-right: 20% !important;">Status</span> </th>
                         <ng-container *matCellDef="let status">
-                        <td mat-cell class="td" *ngIf="(status.item_quant > status.item_minimum) "  > On stock </td>
-                        <td mat-cell class="td"  style="white-space:nowrap;" *ngIf="(status.item_quant == status.item_minimum) "> Minimum stock </td>
-                        <td mat-cell class="td"  style="white-space:nowrap;" *ngIf="(status.item_quant > 0 && status.item_quant < status.item_minimum) "> Low stock </td>
-                        <td mat-cell class="td"  style="white-space:nowrap;" *ngIf="(status.item_quant == 0) "> No stock </td>
+                        <td mat-cell class="td1" *ngIf="(status.item_quant > status.item_minimum) "  style="border-right: 2px solid #00AC23;"><p class="onStock">  On stock  </p></td>
+                        <td mat-cell class="td1"  style="white-space:nowrap;" style=" border-right: 2px solid #FFD334;" *ngIf="(status.item_quant == status.item_minimum) "><p class="minStock"> Minimum stock</p> </td>
+                        <td mat-cell class="td1"  style="white-space:nowrap;" style=" border-right: 2px solid #F08031;"*ngIf="(  status.item_quant > 0  && status.item_quant < status.item_minimum )"> <p class="lowStock">Low stock</p></td>
+                        <td mat-cell class="td1"  style="white-space:nowrap;" *ngIf="(status.item_quant == 0) " style=" border-right: 2px solid #E32F2F;"> <p class="noStock">No Stock</p> </td>
                       </ng-container>
                       </ng-container>
                   
