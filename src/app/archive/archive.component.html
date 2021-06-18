@@ -66,6 +66,7 @@
             <td mat-cell  *matCellDef="let element">
                 <div class="actBtn">
                  <button mat-raised-button class="archive-button" (click)="recProduct(element.item_id);"><mat-icon>unarchive</mat-icon>Restore</button>
+                 <button (click)="delProduct(element.item_id);"><mat-icon>unarchive</mat-icon>Delete</button>
                 </div>
             </td>
           </ng-container>

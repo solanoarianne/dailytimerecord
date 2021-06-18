@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+// import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -6,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { EventTriggerService } from 'src/app/services/eventTrigger/event-trigger.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface StocksTable {
   item_id: number;
@@ -32,6 +34,7 @@ interface measurementType {
 })
 
 export class StocksAddComponent implements OnInit, AfterViewInit{
+
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -82,6 +85,7 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
   username: string
   username1: string
   closeResult: string;
+  notificationService: any;
   getName(){
     this.modifiedBy = localStorage.getItem("Fullname");
     }
@@ -94,10 +98,19 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
         this.productInfoTableDataSource.sort = this.sort;
       }
 
-      constructor(private ds: DataService, public router: Router, private et: EventTriggerService) { }
-  
+      constructor(private ds: DataService, public router: Router, private et: EventTriggerService,private fb: FormBuilder) { }
+      productForm = this.fb.group({
+        item_name:['',Validators.required],
+        item_desc:['',Validators.required],
+        item_quant:['',Validators.required],
+        date_expiry:['',Validators.required],
+        item_price:['',Validators.required],
+        item_minimum:['',Validators.required],
+        measurementType:['',Validators.required],
+        remarks:['',Validators.required]
+       });
         ngOnInit() {
-
+         
         //mapupunta yung name sa hidden na input sa add
         this.getName();
         //mapupunta yung name sa hidden na input sa edit
@@ -112,6 +125,10 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
       console.log(this.productInfoTableDataSource);
     })
   }
+  //binago ko saglit yung SUBMIT sa Add button pwede to tanggalin tas ipalit yung addproduct()
+onSubmit() {
+  console.log(this.productForm);
+}
 
 //CREATE
 async addProduct(){
@@ -128,6 +145,7 @@ async addProduct(){
   
   await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
     this.et.sendClickEvent();
+
   });
 }
 //EDIT

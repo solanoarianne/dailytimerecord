@@ -113,4 +113,12 @@ export class ArchiveComponent implements OnInit, AfterViewInit {
           this.et.sendClickEvent();
       });
       }
+       //DELETE PRODUCT
+       async delProduct(e) {
+        this.prodInfo.item_id = e;
+        await this.ds.sendApiRequest("delProduct", this.prodInfo).subscribe(res => {
+          this.pullArchive();
+          this.et.sendClickEvent();
+      });
+      }
 }
