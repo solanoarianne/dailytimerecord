@@ -60,15 +60,17 @@
                                 panelClass="example-month-picker">
                 </mat-datepicker>
               </mat-form-field>
-      <button mat-button (click)="clearDate()" class="clearBtn">Clear</button> 
-      
- 
-      <button mat-button (click)="exportIt()" class="exportBtn">EXPORT {{monthYear}} csv</button>
-   
-            </div>      
+     
+              <button mat-button (click)="clearDate()" class="clearBtn"><mat-icon>refresh</mat-icon>Clear</button> 
+            </div>  
+            <button mat-button (click)="exportIt()" class="exportBtn">EXPORT {{monthYear}} csv</button>    
         </div>
-    </div>
+         
   
+    </div>
+
+      
+
      <!-- TABLE SECTION -->
 
      <div class="mat-elevation-z8 tableSize">

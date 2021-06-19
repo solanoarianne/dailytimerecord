@@ -108,11 +108,12 @@ mat-sidenav {
 /* RADIO BUTTONS STYLES */
 
 .topContent {
-  width: 94%;
+  width: 100%;
   height: fit-content !important;
   margin: auto;
   margin-top: 1%;
   display: flex;
+  margin-left: 3%;
 
   align-items: center;
   justify-content: space-between;
@@ -190,5 +191,29 @@ table {
 }
 
 .exportBtn {
-  float: right;
+  background-color: #37a641;
+  margin-right: 6%;
+  margin-bottom: 0%;
+  color: #fbfbfb;
+  font-family: Poppins;
+}
+
+.exportBtn:hover {
+  background-color: white;
+  color: #37a641;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.clearBtn {
+  background-color: #3e66db;
+  color: #fbfbfb;
+  margin-left: 5px;
+  font-family: Poppins;
+}
+
+.clearBtn:hover {
+  background-color: #fbfbfb;
+  color: #3e66db;
+  font-family: Poppins;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

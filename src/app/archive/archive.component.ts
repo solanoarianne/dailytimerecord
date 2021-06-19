@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from '../services/data.service';
 import { EventTriggerService } from '../services/eventTrigger/event-trigger.service';
+import Swal from 'sweetalert2';
 
 export interface archiveTable {
   item_id: number;
@@ -107,18 +108,60 @@ export class ArchiveComponent implements OnInit, AfterViewInit {
 
       //RECOVER PRODUCT
       async recProduct(e) {
-        this.prodInfo.item_id = e;
-        await this.ds.sendApiRequest("recProduct", this.prodInfo).subscribe(res => {
-          this.pullArchive();
-          this.et.sendClickEvent();
-      });
+
+        Swal.fire({
+          title: 'Are you sure you want to recover product?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, recover it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Recovered!',
+              'Your file has been recovered.',
+              'success'
+            )
+
+              this.prodInfo.item_id = e;
+              this.ds.sendApiRequest("recProduct", this.prodInfo).subscribe(res => {
+              this.pullArchive();
+              this.et.sendClickEvent();
+          });
+       
+          }
+        });
+
+
+      
       }
        //DELETE PRODUCT
        async delProduct(e) {
-        this.prodInfo.item_id = e;
-        await this.ds.sendApiRequest("delProduct", this.prodInfo).subscribe(res => {
+
+        Swal.fire({
+          title: 'Are you sure you want permanent delete?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+            
+          this.prodInfo.item_id = e;
+          this.ds.sendApiRequest("delProduct", this.prodInfo).subscribe(res => {
           this.pullArchive();
           this.et.sendClickEvent();
       });
+          }
+        });
+
       }
 }

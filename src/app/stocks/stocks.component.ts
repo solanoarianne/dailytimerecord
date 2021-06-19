@@ -12,7 +12,8 @@ import { ArchiveComponent } from '../archive/archive.component';
 import { EventTriggerService } from '../services/eventTrigger/event-trigger.service';
 import { Subscription } from 'rxjs';
 import { EditStockComponent } from '../modals/edit-stock/edit-stock.component';
-
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 export interface StocksTable {
@@ -42,6 +43,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   
   mt: measurementType[] = [
+    {value: 'PCS/PCE', viewValue: 'Piece/s (PCS/PCE)'},
     {value: 'L', viewValue: 'Liters (L)'},
     {value: 'ml', viewValue: 'mililiters (ml)'},
     {value: 'dL', viewValue: 'deciliters (dl)'},
@@ -52,30 +54,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
     
   ];
 
-
-
   @ViewChild('EditDialog', { static: true }) EditDialog: TemplateRef<any>;
-
-  editModal = (i) => {
-    this.dialog.open(this.EditDialog);
-    this.item_name1 = i.item_name;
-    this.item_id1 = i.item_id;
-    this.item_desc1 = i.item_desc;
-    this.item_quant1 =i.item_quant;
-    this.item_price1 = i.item_price;
-    this.item_minimum1 = i.item_minimum;
-    this.remarks1 = i.remarks;
-    this.date_expiry1 = i.date_expiry;
-    this.measurementType1 = i.measurementType;
-
-
-   
-
-    console.log(this.prodInfo);
-
-  }
-
-
 
 
   @ViewChild(MatSort) sort: MatSort;
@@ -136,17 +115,49 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   archiveCounter = 0;
 
-  constructor(private et: EventTriggerService,public dialog: MatDialog, private ds: DataService) {
-
+  constructor(private fb: FormBuilder, private et: EventTriggerService,public dialog: MatDialog, private ds: DataService) {
 
     this.clickEvent = this.et.getClickEvent().subscribe(()=> {
       this.pullProducts();
 
       this.archiveCount();
-    })
-
+    });
 
   }
+
+  productForm = this.fb.group({
+    item_id:['',Validators.required],
+    item_name:['',Validators.required],
+    item_desc:['',Validators.required],
+    item_quant:['',Validators.required],
+    date_expiry:['',Validators.required],
+    item_price:['',Validators.required],
+    item_minimum:['',Validators.required],
+    measurementType:['',Validators.required],
+    remarks:['',Validators.required]
+   });
+
+
+
+   
+  editModal = (i) => {
+    
+    this.dialog.open(this.EditDialog);
+
+    this.productForm.patchValue({
+      item_id: i.item_id,
+      item_name: i.item_name,
+      item_desc: i.item_desc,
+      item_quant: i.item_quant,
+      item_price: i.item_price,
+      item_minimum: i.item_minimum,
+      remarks: i.remarks,
+      date_expiry: i.date_expiry,
+      measurementType: i.measurementType
+    })
+  }
+
+
 
 
   // openDialog(): void {
@@ -260,12 +271,32 @@ archiveCount() {
 
 //ARCHIVE Item
 async arcProduct(e) {
-  this.prodInfo.item_id = e;
-  console.log(this.prodInfo);
-  await this.ds.sendApiRequest("arcProduct", this.prodInfo).subscribe(res => {
-    this.pullProducts();
-    this.archiveCount();
-});
+
+  Swal.fire({
+    title: 'Are you sure you want to archive product?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, archive it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        'Recovered!',
+        'Your file has been archived.',
+        'success'
+      )
+
+      this.prodInfo.item_id = e;
+      console.log(this.prodInfo);
+        this.ds.sendApiRequest("arcProduct", this.prodInfo).subscribe(res => {
+        this.pullProducts();
+        this.archiveCount();
+    });
+ 
+    }
+  });
+ 
 }
 //RECOVER Item
 async recProduct(e) {
@@ -274,46 +305,51 @@ async recProduct(e) {
     this.pullArchive();
 });
 }
-//CREATE
-async addProduct(){
-  this.prodInfo.item_name = this.item_name;
-  this.prodInfo.item_desc = this.item_desc;
-  this.prodInfo.item_quant = this.item_quant;
-  this.prodInfo.date_expiry = this.date_expiry;
-  this.prodInfo.item_price = this.item_price;
-  this.prodInfo.item_minimum = this.item_minimum;
-  this.prodInfo.remarks = this.remarks;
-  this.prodInfo.modifiedBy = this.modifiedBy;
 
-  console.log(this.prodInfo.modifiedBy);
-  
-  await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
-    this.pullProducts();
-  });
-}
 
 // EDIT
 editProduct(e){
   e.preventDefault();
 
-  this.prodInfo.item_name = this.item_name1;
-  this.prodInfo.item_id = this.item_id1;
-  this.prodInfo.item_desc = this.item_desc1;
-  this.prodInfo.item_quant =this.item_quant1;
-  this.prodInfo.item_minimum = this.item_minimum1;
-  this.prodInfo.item_price = this.item_price1;
-  this.prodInfo.remarks = this.remarks1;
-  this.prodInfo.date_expiry = this.date_expiry1;
+  if(!this.productForm.valid)
+  {
+    Swal.fire({
+      icon: 'error',
+      title: 'All fields are required',
+      showConfirmButton: false,
+      timer: 1200
+    });
 
-  this.prodInfo.modifiedBy = this.modifiedBy;
-  this.prodInfo.measurementType = this.measurementType1;
+    return false;
+  } 
+  
+  else
+  {
+    this.prodInfo.item_name = this.productForm.value['item_name'];
+    this.prodInfo.item_id =   this.productForm.value['item_id'];
+    this.prodInfo.item_desc = this.productForm.value['item_desc'];
+    this.prodInfo.item_quant =  this.productForm.value['item_quant'];
+    this.prodInfo.item_minimum =  this.productForm.value['item_minimum'];
+    this.prodInfo.item_price =  this.productForm.value['item_price'];
+    this.prodInfo.remarks = this.productForm.value['remarks'];
+    this.prodInfo.date_expiry = this.productForm.value['date_expiry'];
+    this.prodInfo.modifiedBy = this.modifiedBy;
+    this.prodInfo.measurementType = this.productForm.value['measurementType'];
+  
+  this.ds.sendApiRequest("editProduct", this.prodInfo).subscribe(data => {
+  this.pullProducts();
+    });
+  
+    Swal.fire({
+      icon: 'success',
+      title: 'Stock Edited',
+      showConfirmButton: false,
+      timer: 1200
+    });
+  
+  }
+ 
 
-  console.log(this.prodInfo);
-
-this.ds.sendApiRequest("editProduct", this.prodInfo).subscribe(data => {
-
-this.pullProducts();
-  });
 
 }
 

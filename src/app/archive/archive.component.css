@@ -38,6 +38,7 @@ table {
   font-weight: bold;
   font-size: 14px;
   color: #282828;
+  padding: 1%;
 }
 
 .tableSize {
@@ -62,4 +63,19 @@ table {
 .archiveIcon {
   font-size: 21px;
   margin-left: -10%;
+}
+
+.restoreBtn {
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+
+  margin-bottom: 5px;
+  background-color: #37a641;
+  color: #ffffff;
+  width: 110px;
+}
+
+.restoreBtn:hover {
+  background-color: #fbfbfb;
+  color: #37a641;
 }

@@ -10,7 +10,6 @@
 
 <body>
     <div class="sidenavbar">
-
         <mat-sidenav-container autosize>
             <mat-sidenav class="sidenav" #drawer mode="side" opened="true">
                 <img src="../assets/logo.png" class="inventory-logo">
@@ -103,7 +102,7 @@
                       <!-- item_minimum Column -->
                       <ng-container matColumnDef="Column5">
                         <th mat-header-cell class="th" *matHeaderCellDef > Minimum </th>
-                        <td mat-cell  class="td"  *matCellDef="let element"> {{element.item_minimum | number}} </td>
+                        <td mat-cell  class="td"  *matCellDef="let element"> {{element.item_minimum | number}} {{element.measurementType}} </td>
                       </ng-container>
 
                        <!-- item_price Column -->
@@ -156,12 +155,14 @@
     <!-- EDIT MODAL -->
 
     <ng-template #EditDialog>
+      <form [formGroup] = "productForm">
+
       <mat-dialog-content>
         <mat-list role="list">
 
           <div>
               <h2>Edit Stock
-              <button mat-icon-button class="close-button" aria-label="Example icon-button with heart icon" mat-dialog-close>
+              <button mat-icon-button class="close-button" aria-label="Example icon-button with heart icon" mat-dialog-close  [disabled]="productForm.invalid">
               <mat-icon>close</mat-icon>
           </button>
         </h2>
@@ -174,18 +175,18 @@
               <mat-form-field class="product-name" appearance="outline">
             
                   <mat-label class="label-editstocks">Product Name</mat-label>
-                  <input matInput hidden placeholder="Product Name" [(ngModel)] = "item_id1">
-                  <input matInput class="input-editstocks" placeholder="Product Name" [(ngModel)] = "item_name1">
+                  <input matInput hidden placeholder="Product Name" formControlName = "item_id">
+                  <input matInput class="input-editstocks" placeholder="Product Name" formControlName = "item_name">
               </mat-form-field>
       
               <mat-form-field class="quantity" appearance="outline">
                   <mat-label>Quantity</mat-label>
-                  <input matInput class="input-editstocks" type="number" placeholder="Quantity" [(ngModel)] = "item_quant1">
+                  <input matInput class="input-editstocks" type="number" placeholder="Quantity" formControlName = "item_quant">
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="measurement">
                 <mat-label>Measurement</mat-label>
-                <mat-select [(ngModel)]="measurementType1" name="mt">
+                <mat-select formControlName="measurementType" name="mt">
                   <mat-option *ngFor="let mt of mt" [value]="mt.value">
                     {{mt.viewValue}}
                   </mat-option>
@@ -198,7 +199,7 @@
       
               <mat-form-field class="description" appearance="outline">
                   <mat-label class="label-editstocks">Description</mat-label>
-                  <input class="input-editstocks" matInput placeholder="Description" [(ngModel)] = "item_desc1" value="">
+                  <input class="input-editstocks" matInput placeholder="Description" formControlName = "item_desc" value="">
               </mat-form-field>
       
           </mat-list-item>
@@ -207,21 +208,21 @@
       
               <mat-form-field class="date-expiry" appearance="outline">
                   <mat-label class="label-editstocks">Date Expiry</mat-label>
-                  <input class="input-editstocks" matInput placeholder="Date Expiry" [matDatepicker]="picker" [(ngModel)] = "date_expiry1">
+                  <input class="input-editstocks" matInput placeholder="Date Expiry" [matDatepicker]="picker" formControlName = "date_expiry">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
       
               <mat-form-field class="price" appearance="outline">
                   <mat-label class="label-editstocks">Price</mat-label>
-                  <input class="input-editstocks" matInput type="number" class="example-right-align"  [(ngModel)] = "item_price1">
+                  <input class="input-editstocks" matInput type="number" class="example-right-align"  formControlName = "item_price">
                   <span matPrefix>₱&nbsp;</span>
                   <span matSuffix>.00</span>
               </mat-form-field>
       
               <mat-form-field class="minimum" appearance="outline">
                   <mat-label class="label-editstocks">Minimum</mat-label>
-                  <input class="input-editstocks" matInput type="number" placeholder="Minimum"  [(ngModel)] = "item_minimum1">
+                  <input class="input-editstocks" matInput type="number" placeholder="Minimum"  formControlName = "item_minimum">
               </mat-form-field>
       
           </mat-list-item>
@@ -230,7 +231,7 @@
       
               <mat-form-field class="remarks" appearance="outline">
                   <mat-label class="label-editstocks">Remarks</mat-label>
-                  <input class="input-editstocks" matInput placeholder="Remarks"  [(ngModel)] = "remarks1">
+                  <input class="input-editstocks" matInput placeholder="Remarks"  formControlName = "remarks">
               </mat-form-field>
       
           </mat-list-item>
@@ -239,8 +240,9 @@
       </mat-list>
       </mat-dialog-content>
       <mat-dialog-actions align="end">
-        <button class="add-stocks" (click)="editProduct($event);" mat-flat-button color="warn">Add</button>
+        <button class="add-stocks" (click)="editProduct($event);" mat-flat-button color="warn">Edit</button>
       </mat-dialog-actions>
+      </form>
     </ng-template>
 
 

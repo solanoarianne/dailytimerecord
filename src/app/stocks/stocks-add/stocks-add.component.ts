@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 // import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { EventTriggerService } from 'src/app/services/eventTrigger/event-trigger.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 
 export interface StocksTable {
   item_id: number;
@@ -57,6 +59,7 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
 
   
   mt: measurementType[] = [
+    {value: 'PCS/PCE', viewValue: 'Piece/s (PCS/PCE)'},
     {value: 'L', viewValue: 'Liters (L)'},
     {value: 'ml', viewValue: 'mililiters (ml)'},
     {value: 'dL', viewValue: 'deciliters (dl)'},
@@ -86,6 +89,11 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
   username1: string
   closeResult: string;
   notificationService: any;
+
+
+  isSubmitted = false;
+
+
   getName(){
     this.modifiedBy = localStorage.getItem("Fullname");
     }
@@ -98,7 +106,11 @@ export class StocksAddComponent implements OnInit, AfterViewInit{
         this.productInfoTableDataSource.sort = this.sort;
       }
 
-      constructor(private ds: DataService, public router: Router, private et: EventTriggerService,private fb: FormBuilder) { }
+      constructor(private ds: DataService, public router: Router, private et: EventTriggerService,private fb: FormBuilder, private dialogRef: MatDialogRef<StocksAddComponent>) { }
+
+
+
+
       productForm = this.fb.group({
         item_name:['',Validators.required],
         item_desc:['',Validators.required],
@@ -131,22 +143,42 @@ onSubmit() {
 }
 
 //CREATE
-async addProduct(){
-  this.prodInfo.item_name = this.item_name;
-  this.prodInfo.item_desc = this.item_desc;
-  this.prodInfo.item_quant = parseInt(this.item_quant);
-  this.prodInfo.date_expiry = this.date_expiry;
-  this.prodInfo.item_price = this.item_price;
-  (this.prodInfo.item_minimum) = parseInt(this.item_minimum);
-  this.prodInfo.remarks = this.remarks;
-  this.prodInfo.modifiedBy = this.modifiedBy;
-  this.prodInfo.measurementType = this.measurementType;
-  console.log(this.prodInfo);
-  
-  await this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
-    this.et.sendClickEvent();
+addProduct(){
 
-  });
+  this.isSubmitted = true;
+
+  if(!this.productForm.valid)
+  {
+    return false;
+  } 
+  
+  else
+  {
+    this.prodInfo.item_name = this.productForm.value['item_name'];
+    this.prodInfo.item_desc = this.productForm.value['item_desc'];
+    this.prodInfo.item_quant = parseInt(this.productForm.value['item_quant']);
+    this.prodInfo.date_expiry = this.productForm.value['date_expiry'];
+    this.prodInfo.item_price = this.productForm.value['item_price'];
+    this.prodInfo.item_minimum = parseInt(this.productForm.value['item_minimum']);
+    this.prodInfo.remarks = this.productForm.value['remarks'];
+    this.prodInfo.modifiedBy = localStorage.getItem('Fullname');
+    this.prodInfo.measurementType = this.productForm.value['measurementType'];
+
+    
+    this.ds.sendApiRequest("addProduct", this.prodInfo).subscribe(res => {
+    this.et.sendClickEvent();
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Stock Added',
+      showConfirmButton: false,
+      timer: 1200
+    })
+    this.dialogRef.close();
+  }
+
+  
 }
 //EDIT
 editForm = (products) => {
