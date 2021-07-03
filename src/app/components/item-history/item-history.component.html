@@ -19,9 +19,9 @@
 
 
                 <button mat-button class="sidebarcontent" routerLink="/main" routerLinkActive="selected"><mat-icon class="dashboard">dashboard</mat-icon> Dashboard</button>
-                <button mat-button class="sidebarcontent" routerLink="/stocks"><mat-icon class="stocks">inventory_2</mat-icon> Stocks</button>
-
-           <button mat-button class="sidebarcontent" routerLink="/itemHistory">	<mat-icon class="itemHistory">print</mat-icon>Generate Report</button>
+                <button mat-button class="sidebarcontent" routerLink="/attendance"><mat-icon class="dashboard">person</mat-icon> Attendance</button>
+                <button mat-button class="sidebarcontent" routerLink="/stocks"><mat-icon class="dashboard">people</mat-icon> Employees</button>
+           <button mat-button class="sidebarcontent" routerLink="/itemHistory">	<mat-icon class="dashboard">note</mat-icon>Schedule</button>
             </mat-sidenav>
             <mat-sidenav-content>
                 <div>
@@ -29,7 +29,7 @@
                         <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" mat-button (click)="drawer.toggle()">
                           <mat-icon>menu</mat-icon>
                       </button>
-                        <span>INVENTORY SYSTEM</span>
+                        <span>DAILY TIME RECORD SYSTEM</span>
                         <span class="example-spacer"></span>
 
                         <h3 class="admin-name">Hello! <span id="name"></span></h3>
@@ -47,27 +47,20 @@
                 
         <div class="topContent">
 
-            <div [formGroup] = "datePicker">
-            <label style="font-family: Poppins; font-size: 15px; font-weight: bold;">Select</label><br>
-            <mat-form-field appearance="outline" >
-                <mat-label>Month and Year</mat-label>
-                <input id="selectedMy" formControlName= "date1" matInput [matDatepicker]="dp" [formControl]="date" (ngModelChange) ="monthSelected();">
-                <mat-datepicker-toggle  matSuffix [for]="dp"></mat-datepicker-toggle>
-                <mat-datepicker disabled = "{{inputDisable}}" #dp 
-                                startView="multi-year"
-                                (yearSelected)="chosenYearHandler($event)"
-                                (monthSelected)="chosenMonthHandler($event, dp)"
-                                panelClass="example-month-picker">
-                </mat-datepicker>
-              </mat-form-field>
-     
-              <button mat-button (click)="clearDate()" class="clearBtn"><mat-icon>refresh</mat-icon>Clear</button> 
-            </div>  
-            <button mat-button (click)="exportIt()" class="exportBtn">EXPORT {{monthYear}} csv</button>    
+            
+            <button mat-button (click)="exportIt()" class="exportBtn">Print {{monthYear}}</button>    
         </div>
+
+    
          
   
     </div>
+
+    <mat-form-field class="search"autocomplete="off">
+                  
+      <mat-label search><mat-icon class="aligned-with-icon1"  style="font-size: 25px;">search</mat-icon><span class="iLabel">Search</span></mat-label>
+      <input  autocomplete="off" matInput class="searchField" (keyup)="doFilter($event.target.value)" >
+  </mat-form-field>
 
       
 
@@ -78,62 +71,37 @@
       
           <!-- ID Column -->
           <ng-container matColumnDef="Column1">
-            <th mat-header-cell *matHeaderCellDef hidden> ID </th>
-            <td mat-cell *matCellDef="let element" hidden> {{element.item_id }} </td>
+            <th mat-header-cell *matHeaderCellDef class="th"> Employee ID </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.emp_id}} </td>
           </ng-container>
-
-           <!-- Date Added Column -->
-           <ng-container matColumnDef="Column2">
-            <th mat-header-cell *matHeaderCellDef class="th"> Date Added </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.date_acquired  |  date: 'MMM d, y'}} </td>
-          </ng-container>
-      
+    
           <!-- ITEM_Name Column -->
-          <ng-container matColumnDef="Column3">
-            <th mat-header-cell *matHeaderCellDef class="th"> Product Name </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.item_name}} </td>
+          <ng-container matColumnDef="Column2">
+            <th mat-header-cell *matHeaderCellDef class="th"> First Name </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.first_name}} </td>
           </ng-container>
       
-          <!-- Item_desc Column -->
-          <ng-container matColumnDef="Column4">
-            <th mat-header-cell *matHeaderCellDef class="th"> Description </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.item_desc}} </td>
-          </ng-container>
       
           <!-- item_quant Column -->
+          <ng-container matColumnDef="Column3">
+            <th mat-header-cell *matHeaderCellDef class="th"> Last Name </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.last_name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Column4">
+            <th mat-header-cell *matHeaderCellDef class="th"> Schedule Time in </th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.time_in}} </td>
+          </ng-container>
+
           <ng-container matColumnDef="Column5">
-            <th mat-header-cell *matHeaderCellDef class="th"> Quantity </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.item_quant}} </td>
-          </ng-container>
-
-          <!-- item_minimum Column -->
-          <ng-container matColumnDef="Column6">
-            <th mat-header-cell *matHeaderCellDef class="th"> Minimum </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.item_minimum}} </td>
-          </ng-container>
-
-           <!-- item_price Column -->
-           <ng-container matColumnDef="Column7">
-            <th mat-header-cell *matHeaderCellDef class="th"> Price </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.item_price}} </td>
-          </ng-container>
-        
-          <!-- date_expiry Column -->
-          <ng-container matColumnDef="Column8">
-            <th mat-header-cell *matHeaderCellDef class="th"> DateExpiry </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.date_expiry  |  date: 'MMM d, y'}}</td>
-          </ng-container>
-
-           <!-- remarks Column -->
-           <ng-container matColumnDef="Column9">
-            <th mat-header-cell *matHeaderCellDef class="th"> Remarks </th>
-            <td mat-cell *matCellDef="let element" class="td"> {{element.remarks}} </td>
+            <th mat-header-cell *matHeaderCellDef class="th"> Schedule Time out</th>
+            <td mat-cell *matCellDef="let element" class="td"> {{element.time_out}} </td>
           </ng-container>
 
           <!-- modifiedBy Column -->
-          <ng-container matColumnDef="Column10">
-            <th mat-header-cell *matHeaderCellDef class="th"> Added By </th>
-            <td mat-cell *matCellDef="let element" class="td" style="text-align: center;">{{element.modifiedBy}} <br> {{element.dateModified  |  date: 'MMM d, y' }} </td>
+          <ng-container matColumnDef="Column6">
+            <th mat-header-cell *matHeaderCellDef class="th"> Member Since </th>
+            <td mat-cell *matCellDef="let element" class="td" style="text-align: center;">{{element.dateModified  |  date: 'MMM d, y' }} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

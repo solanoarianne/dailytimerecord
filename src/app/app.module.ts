@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTimepickerModule } from 'mat-timepicker';
 
 
 
@@ -67,6 +68,9 @@ import { EditStockComponent } from './modals/edit-stock/edit-stock.component';
 import { EditServiceService } from './services/editService/edit-service.service';
 import { ItemHistoryComponent } from './components/item-history/item-history.component';
 import { CdkTableExporterModule, MatTableExporterModule } from 'mat-table-exporter';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { UsersideComponent } from './userside/userside.component';
+
 
 
 // HTTP
@@ -84,7 +88,10 @@ import { CdkTableExporterModule, MatTableExporterModule } from 'mat-table-export
     StocksAddComponent,
     ArchiveComponent,
     EditStockComponent,
-    ItemHistoryComponent
+    ItemHistoryComponent,
+    AttendanceComponent,
+    UsersideComponent
+   
   ],
   imports: [
     BrowserModule,
@@ -95,6 +102,7 @@ import { CdkTableExporterModule, MatTableExporterModule } from 'mat-table-export
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MatTimepickerModule,
 
     // Material Cons Imports
    MatDatepickerModule,

@@ -5,9 +5,9 @@ import { DataService } from 'src/app/services/data.service';
 
 export interface StocksTable {
   item_id: number;
-  item_name: string;
+  full_name: string;
   item_desc: string;
-  item_quant: number;
+  emp_dept: string;
   date_expiry: string;
   item_price: number;
   item_minimum: number;
@@ -31,9 +31,9 @@ export class EditStockComponent implements OnInit {
   products: any;
 
   item_id: any;
-  item_name: any;
+  full_name: any;
   item_desc: any;
-  item_quant: any;
+  emp_dept: any;
   date_expiry: any;
   item_price: any;
   item_minimum: any;
@@ -64,6 +64,11 @@ export class EditStockComponent implements OnInit {
     //mapupunta yung name sa hidden na input sa edit
     this.getName1();
   }
+
+  public doFilter = (value: string) => {
+    this.productInfoTableDataSource.filter = value.trim().toLocaleLowerCase();
+  }
+  
   pullProducts() {
     this.ds.sendApiRequest("inventory", null).subscribe(data => {
       this.productInfoTable = data.payload;
@@ -74,9 +79,9 @@ export class EditStockComponent implements OnInit {
   }
   editForm = (products) => {
     this.prodInfo.item_id    = products.item_id;
-    this.prodInfo.item_name = products.item_name;
+    this.prodInfo.full_name = products.full_name;
     this.prodInfo.item_desc = products.item_desc;
-    this.prodInfo.item_quant = products.item_quant;
+    this.prodInfo.emp_dept = products.emp_dept;
     this.prodInfo.date_expiry = products.date_expiry;
     this.prodInfo.item_price = products.item_price;
     this.prodInfo.item_minimum = products.item_minimum;

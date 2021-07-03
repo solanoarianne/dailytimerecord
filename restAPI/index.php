@@ -25,12 +25,12 @@
 			switch ($req[0]) {
 
 				case 'inventory':
-					echo json_encode($post->select("inventory_tb", "0"));
+					echo json_encode($post->select("employee_tb", "0"));
 					
 				break;
 
 				case 'inventory_Archive':
-					echo json_encode($post->selectArchive("inventory_tb", "1"));
+					echo json_encode($post->selectArchive("employee_tb", "1"));
 					
 				break;
 
@@ -96,7 +96,7 @@
 
 				
 				case 'inventory':
-					echo json_encode($post->generalQuery("SELECT * FROM inventory_tb"));
+					echo json_encode($post->generalQuery("SELECT * FROM employee_tb"));
 					
 				break;
 

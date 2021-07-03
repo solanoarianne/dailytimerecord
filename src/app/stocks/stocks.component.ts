@@ -18,18 +18,31 @@ import Swal from 'sweetalert2';
 
 export interface StocksTable {
   item_id: number;
-  item_name: string;
+  emp_id:number;
+  first_name: string;
   item_desc: string;
-  item_quant: number;
+  last_name: string;
+  time_in: number;
+  time_out: number;
   date_expiry: string;
-  item_price: number;
-  item_minimum: number;
+  contact_num: string;
+  item_minimum: string;
   remarks: string;
 
   
 }
 
 interface measurementType {
+  value: string;
+  viewValue: string;
+}
+
+interface time_in {
+  value: string;
+  viewValue: string;
+}
+
+interface time_out {
   value: string;
   viewValue: string;
 }
@@ -43,16 +56,73 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   
   mt: measurementType[] = [
-    {value: 'PCS/PCE', viewValue: 'Piece/s (PCS/PCE)'},
-    {value: 'L', viewValue: 'Liters (L)'},
-    {value: 'ml', viewValue: 'mililiters (ml)'},
-    {value: 'dL', viewValue: 'deciliters (dl)'},
-    {value: 'g', viewValue: 'grams (g)'},
-    {value: 'mg', viewValue: 'miligrams (mg)'},
-    {value: 'kg', viewValue: 'kilogram (kg)'},
+    {value: 'M', viewValue: 'Male'},
+    {value: 'F', viewValue: 'Female'},
     
     
   ];
+
+  ti: time_in[] = [
+    {value: '00:00', viewValue: '00:00'},
+    {value: '01:00', viewValue: '01:00'},
+    {value: '02:00', viewValue: '02:00'},
+    {value: '03:00', viewValue: '03:00'},
+    {value: '04:00', viewValue: '04:00'},
+    {value: '05:00', viewValue: '05:00'},
+    {value: '06:00', viewValue: '06:00'},
+    {value: '07:00', viewValue: '07:00'},
+    {value: '08:00', viewValue: '08:00'},
+    {value: '09:00', viewValue: '09:00'},
+    {value: '10:00', viewValue: '10:00'},
+    {value: '11:00', viewValue: '11:00'},
+    {value: '12:00', viewValue: '12:00'},
+    {value: '13:00', viewValue: '13:00'},
+    {value: '14:00', viewValue: '14:00'},
+    {value: '15:00', viewValue: '15:00'},
+    {value: '16:00', viewValue: '16:00'},
+    {value: '17:00', viewValue: '17:00'},
+    {value: '18:00', viewValue: '18:00'},
+    {value: '19:00', viewValue: '19:00'},
+    {value: '20:00', viewValue: '20:00'},
+    {value: '21:00', viewValue: '21:00'},
+    {value: '22:00', viewValue: '22:00'},
+    {value: '23:00', viewValue: '23:00'},
+ 
+    
+    
+  ];
+
+  to: time_out[] = [
+    {value: '00:00', viewValue: '00:00'},
+    {value: '01:00', viewValue: '01:00'},
+    {value: '02:00', viewValue: '02:00'},
+    {value: '03:00', viewValue: '03:00'},
+    {value: '04:00', viewValue: '04:00'},
+    {value: '05:00', viewValue: '05:00'},
+    {value: '06:00', viewValue: '06:00'},
+    {value: '07:00', viewValue: '07:00'},
+    {value: '08:00', viewValue: '08:00'},
+    {value: '09:00', viewValue: '09:00'},
+    {value: '10:00', viewValue: '10:00'},
+    {value: '11:00', viewValue: '11:00'},
+    {value: '12:00', viewValue: '12:00'},
+    {value: '13:00', viewValue: '13:00'},
+    {value: '14:00', viewValue: '14:00'},
+    {value: '15:00', viewValue: '15:00'},
+    {value: '16:00', viewValue: '16:00'},
+    {value: '17:00', viewValue: '17:00'},
+    {value: '18:00', viewValue: '18:00'},
+    {value: '19:00', viewValue: '19:00'},
+    {value: '20:00', viewValue: '20:00'},
+    {value: '21:00', viewValue: '21:00'},
+    {value: '22:00', viewValue: '22:00'},
+    {value: '23:00', viewValue: '23:00'},
+ 
+    
+    
+  ];
+
+  
 
   @ViewChild('EditDialog', { static: true }) EditDialog: TemplateRef<any>;
 
@@ -65,7 +135,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
   productInfoTableDataSource = new MatTableDataSource(this.productInfoTable);
   displayedColumns: any[] = [
 
-    "statusCol",
+    
     "Column1",
     "Column2",
     "Column3",
@@ -75,6 +145,7 @@ export class StocksComponent implements OnInit, AfterViewInit {
     "Column7",
     "Column8",
     "Column9",
+    "Column10",
     "ActionColumn",
   
   ];
@@ -90,23 +161,29 @@ export class StocksComponent implements OnInit, AfterViewInit {
   products: any;
 
   item_id: any;
-  item_name: any;
+  emp_id: any;
+  first_name: string;
   item_desc: any;
-  item_quant: number;
+  last_name: string;
+  time_in: number;
+  time_out: number;
   date_expiry: any;
-  item_price: any;
-  item_minimum: number;
+  contact_num: string;
+  item_minimum: string;
   remarks: any;
   username: string
   username1: string
   measurementType: any;
   item_id1: any;
-  item_name1: any;
+  emp_id1: any;
+  first_name1: string;
   item_desc1: any;
-  item_quant1: number;
+  last_name1: string;
+  time_in1: number;
+  time_out1: number;
   date_expiry1: any;
-  item_price1: any;
-  item_minimum1: number;
+  contact_num1: string;
+  item_minimum1: string;
   remarks1: any;
   measurementType1: any;
 
@@ -127,11 +204,14 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
   productForm = this.fb.group({
     item_id:['',Validators.required],
-    item_name:['',Validators.required],
+    emp_id:['',Validators.required],
+    first_name:['',Validators.required],
     item_desc:['',Validators.required],
-    item_quant:['',Validators.required],
+    last_name:['',Validators.required],
+    time_in:['',Validators.required],
+    time_out:['',Validators.required],
     date_expiry:['',Validators.required],
-    item_price:['',Validators.required],
+    contact_num:['',Validators.required],
     item_minimum:['',Validators.required],
     measurementType:['',Validators.required],
     remarks:['',Validators.required]
@@ -146,10 +226,13 @@ export class StocksComponent implements OnInit, AfterViewInit {
 
     this.productForm.patchValue({
       item_id: i.item_id,
-      item_name: i.item_name,
+      emp_id: i.emp_id,
+      first_name: i.first_name,
       item_desc: i.item_desc,
-      item_quant: i.item_quant,
-      item_price: i.item_price,
+      last_name: i.last_name,
+      time_in: i.time_in,
+      time_out: i.time_out,
+      contact_num: i.contact_num,
       item_minimum: i.item_minimum,
       remarks: i.remarks,
       date_expiry: i.date_expiry,
@@ -158,21 +241,13 @@ export class StocksComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(StocksAddComponent, {
-  //     width: '250px',
-  //     data: {name: this.name, animal: this.animal}
-  //   });
-  // }
   
 
   editStocks(): void {
     this.dialog.open(EditStockComponent, {
       data: {
         item_id: this.item_id, 
-        item_name: this.item_name
+        full_name: this.first_name
             }
     });
   }
@@ -273,7 +348,7 @@ archiveCount() {
 async arcProduct(e) {
 
   Swal.fire({
-    title: 'Are you sure you want to archive product?',
+    title: 'Are you sure you want to archive this file?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -325,12 +400,15 @@ editProduct(e){
   
   else
   {
-    this.prodInfo.item_name = this.productForm.value['item_name'];
+    this.prodInfo.first_name = this.productForm.value['first_name'];
     this.prodInfo.item_id =   this.productForm.value['item_id'];
+    this.prodInfo.emp_id =   this.productForm.value['emp_id'];
     this.prodInfo.item_desc = this.productForm.value['item_desc'];
-    this.prodInfo.item_quant =  this.productForm.value['item_quant'];
+    this.prodInfo.last_name =  this.productForm.value['last_name'];
+    this.prodInfo.time_in =  this.productForm.value['time_in'];
+    this.prodInfo.time_out =  this.productForm.value['time_out'];
     this.prodInfo.item_minimum =  this.productForm.value['item_minimum'];
-    this.prodInfo.item_price =  this.productForm.value['item_price'];
+    this.prodInfo.contact_num =  this.productForm.value['contact_num'];
     this.prodInfo.remarks = this.productForm.value['remarks'];
     this.prodInfo.date_expiry = this.productForm.value['date_expiry'];
     this.prodInfo.modifiedBy = this.modifiedBy;
@@ -342,7 +420,7 @@ editProduct(e){
   
     Swal.fire({
       icon: 'success',
-      title: 'Stock Edited',
+      title: 'Employee Edited',
       showConfirmButton: false,
       timer: 1200
     });

@@ -14,49 +14,49 @@
       
           <!-- ID Column -->
           <ng-container matColumnDef="Column1">
-            <th mat-header-cell hidden class="th" *matHeaderCellDef > ID </th>
-            <td mat-cell hidden class="td" *matCellDef="let element"> {{element.item_id}} </td>
+            <th mat-header-cell class="th" *matHeaderCellDef > Employee ID </th>
+            <td mat-cell class="td" *matCellDef="let element"> {{element.emp_id}} </td>
           </ng-container>
       
           <!-- ITEM_Name Column -->
           <ng-container matColumnDef="Column2">
-            <th mat-header-cell class="th" *matHeaderCellDef > Product Name </th>
-            <td mat-cell class="td" *matCellDef="let element"> {{element.item_name}} </td>
+            <th mat-header-cell class="th" *matHeaderCellDef > First Name </th>
+            <td mat-cell class="td" *matCellDef="let element"> {{element.first_name}} </td>
           </ng-container>
       
           <!-- Item_desc Column -->
-          <ng-container matColumnDef="Column3">
-            <th mat-header-cell class="th" *matHeaderCellDef > Description </th>
+          <ng-container matColumnDef="Column4">
+            <th mat-header-cell class="th" *matHeaderCellDef > Complete Address </th>
             <td mat-cell class="td" *matCellDef="let element"> {{element.item_desc}} </td>
           </ng-container>
       
           <!-- item_quant Column -->
-          <ng-container matColumnDef="Column4">
-            <th mat-header-cell class="th" *matHeaderCellDef > Quantity </th>
-            <td mat-cell class="td" *matCellDef="let element"> {{element.item_quant}} </td>
+          <ng-container matColumnDef="Column3">
+            <th mat-header-cell class="th" *matHeaderCellDef > Last Name </th>
+            <td mat-cell class="td" *matCellDef="let element"> {{element.last_name}} </td>
           </ng-container>
 
           <!-- item_minimum Column -->
           <ng-container matColumnDef="Column5">
-            <th mat-header-cell class="th" *matHeaderCellDef > Minimum </th>
+            <th mat-header-cell class="th" *matHeaderCellDef > Job Title </th>
             <td mat-cell class="td" *matCellDef="let element"> {{element.item_minimum}} </td>
           </ng-container>
 
            <!-- item_price Column -->
            <ng-container matColumnDef="Column6">
-            <th mat-header-cell class="th" *matHeaderCellDef > Price </th>
-            <td mat-cell class="td" *matCellDef="let element"> {{element.item_price}} </td>
+            <th mat-header-cell class="th" *matHeaderCellDef > Contact Number </th>
+            <td mat-cell class="td" *matCellDef="let element"> {{element.contact_num}} </td>
           </ng-container>
         
           <!-- date_expiry Column -->
           <ng-container matColumnDef="Column7">
-            <th mat-header-cell class="th" *matHeaderCellDef > DateExpiry </th>
+            <th mat-header-cell class="th" *matHeaderCellDef > Date of Birth </th>
             <td mat-cell class="td" *matCellDef="let element"> {{element.date_expiry}} </td>
           </ng-container>
 
            <!-- remarks Column -->
            <ng-container matColumnDef="Column8">
-            <th mat-header-cell class="th" *matHeaderCellDef > Remarks </th>
+            <th mat-header-cell class="th" *matHeaderCellDef > Department </th>
             <td mat-cell class="td" *matCellDef="let element"> {{element.remarks}} </td>
           </ng-container>
 

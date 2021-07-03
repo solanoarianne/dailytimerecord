@@ -11,9 +11,9 @@ import { EditStockComponent } from 'src/app/modals/edit-stock/edit-stock.compone
 export class EditServiceService {
 
   item_id: number;
-    item_name: string;
+    full_name: string;
     item_desc: string;
-    item_quant: number;
+    emp_dept: string;
     date_expiry: string;
     item_price: number;
     item_minimum: number;
@@ -27,9 +27,9 @@ export class EditServiceService {
     const dialogRef = this.dialog.open(EditStockComponent, {
       data: { 
         item_id: this.item_id, 
-        item_name: this.item_name,
+        full_name: this.full_name,
         item_desc: this.item_desc,
-        item_quant: this.item_quant,
+        emp_dept: this.emp_dept,
         item_price: this.item_price,
         item_minimum: this.item_minimum,
         date_expiry: this.date_expiry,

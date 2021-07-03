@@ -9,12 +9,13 @@ import Swal from 'sweetalert2';
 
 export interface archiveTable {
   item_id: number;
-  item_name: string;
+  emp_id: number;
+  first_name: string;
   item_desc: string;
-  item_quant: number;
+  last_name: string;
   date_expiry: string;
-  item_price: number;
-  item_minimum: number;
+  contact_num: string;
+  item_minimum: string;
   remarks: string;
 }
 @Component({
@@ -54,14 +55,15 @@ export class ArchiveComponent implements OnInit, AfterViewInit {
   prodInfo: any = {};
   products: any;
 
-  item_id: any;
-  item_name: any;
-  item_desc: any;
-  item_quant: any;
-  date_expiry: any;
-  item_price: any;
-  item_minimum: any;
-  remarks: any;
+  item_id: number;
+  emp_id: number;
+  first_name: string;
+  item_desc: string;
+  last_name: string;
+  date_expiry: string;
+  contact_num: string;
+  item_minimum: string;
+  remarks: string;
   username: string
   username1: string
   

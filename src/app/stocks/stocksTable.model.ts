@@ -1,11 +1,11 @@
 export interface StocksTable {
     item_id: number;
-    item_name: string;
+    first_name: string;
     item_desc: string;
-    item_quant: number;
+    last_name: string;
     date_expiry: string;
-    item_price: number;
-    item_minimum: number;
+    contact_num: string;
+    item_minimum: string;
     remarks: string;
   
     

@@ -7,7 +7,8 @@ import { StocksComponent } from './stocks/stocks.component';
 import { SupplyComponent } from './supply/supply.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ItemHistoryComponent } from './components/item-history/item-history.component';
-
+import { AttendanceComponent } from './attendance/attendance.component';
+import { UsersideComponent } from './userside/userside.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,14 @@ const routes: Routes = [
   {
     path: 'itemHistory',
     component: ItemHistoryComponent
+  },
+  {
+    path: 'attendance',
+    component: AttendanceComponent
+  },
+  {
+    path: 'userside',
+    component: UsersideComponent
   }
   ,{ 
     path: '',   

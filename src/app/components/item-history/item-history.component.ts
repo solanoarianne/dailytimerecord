@@ -4,6 +4,7 @@ import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/mater
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
 import {FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatTimepickerModule} from 'mat-timepicker';
 
 
 
@@ -48,21 +49,20 @@ export enum ExportType {
   TXT = 'txt',
   JSON = 'json',
   OTHER = 'other'
+
 }
 
 
 
 
 export interface StocksTable {
-  item_id: number;
-  item_name: string;
-  item_desc: string;
-  item_quant: number;
+  emp_id: number;
+  first_name: string;
+  last_name: string;
+  time_in: number;
+  time_out: number;
   date_expiry: string;
-  item_price: number;
-  item_minimum: number;
-  remarks: string;
-
+ 
   
 }
 
@@ -102,10 +102,6 @@ export class ItemHistoryComponent extends CdkTableExporterModule implements OnIn
     "Column4",
     "Column5",
     "Column6",
-    "Column7",
-    "Column8",
-    "Column9",
-    "Column10",
  
   
   ];
@@ -170,7 +166,9 @@ exportIt() {
 
   }
 
-
+  public doFilter = (value: string) => {
+    this.productInfoTableDataSource.filter = value.trim().toLocaleLowerCase();
+  }
 
 
   datePicker = new FormGroup({
@@ -217,7 +215,7 @@ exportIt() {
 
     if(count < 2){
      
-        this.monthYear = "All inventory stocks";
+        this.monthYear = "Schedules";
 
         this.ds.sendApiRequest("inventory", null).subscribe(data => {
         this.selected = data.data;
